@@ -1,3 +1,3 @@
 # proiectPOO1
 
-Acest proiect va simula gestionarea unei aplicatii de adoptat animale.
+Acest proiect va simula gestionarea unui adapost de adoptat animale.
