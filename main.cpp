@@ -15,26 +15,26 @@ private:
 
 public:
     //setters and getters
-    void setNumePrenume(string numePrenumeNou) { numePrenume = numePrenumeNou; }
-    void setVarsta(int *varstaNoua) { varsta = varstaNoua; }
-    void setSex(char *sexNou) { sex = sexNou; }
-    void setRating(double ratingNou) { rating = ratingNou; }
-    void setAnimaleDetinute(int animaleDetinuteNou) { animaleDetinute = animaleDetinuteNou; }
+    void setNumePrenume(string numePrenume) { this->numePrenume = numePrenume; }
+    void setVarsta(int *varsta) { this->varsta = varsta; }
+    void setSex(char *sex) { this->sex = sex; }
+    void setRating(double rating) { this->rating = rating; }
+    void setAnimaleDetinute(int animaleDetinute) { this->animaleDetinute = animaleDetinute; }
     static void setNumarClienti(int numarClientiNou) { numarClienti = numarClientiNou; }
 
-    string getNumePrenume() { return numePrenume; }
-    int *getVarsta() { return varsta; }
-    char *getSex() { return sex; }
-    double getRating() { return rating; }
-    int getAnimaleDetinute() { return animaleDetinute; }
+    string getNumePrenume() { return this->numePrenume; }
+    int *getVarsta() { return this->varsta; }
+    char *getSex() { return this->sex; }
+    double getRating() { return this->rating; }
+    int getAnimaleDetinute() { return this->animaleDetinute; }
     static int getNumarClienti() { return numarClienti; }
 
     //constructors
     Client();
-    Client(string nP, int v);
-    Client(string nP, double r, int aD);
-    Client(string nP, int v, double r, int aD);
-    Client(string nP, int v, char s, double r, int aD);
+    Client(string numePrenume, int varsta);
+    Client(string numePrenume, double rating, int animaleDetinute);
+    Client(string numePrenume, int varsta, double rating, int animaleDetinute);
+    Client(string numePrenume, int varsta, char sex, double rating, int animaleDetinute);
 
     //destructor
     ~Client();
@@ -46,64 +46,64 @@ int Client::numarClienti = 0;
 Client::Client()
 {
     cout << "Constructor de initializare: " << endl;
-    numePrenume = "Anonim";
-    varsta = new int(0);
-    sex = new char('-');
-    rating = 0;
-    animaleDetinute = 0;
+    this->numePrenume = "Anonim";
+    this->varsta = new int(0);
+    this->sex = new char('-');
+    this->rating = 0;
+    this->animaleDetinute = 0;
     numarClienti++;
-    cout << numePrenume << " cu varsta de " << *varsta << " ani si sexul " << *sex << ", are ratingul de " << rating << " puncte si a detinut " << animaleDetinute << " animale. " << endl;
+    cout << this->numePrenume << " cu varsta de " << *this->varsta << " ani si sexul " << *this->sex << ", are ratingul de " << this->rating << " puncte si a detinut " << this->animaleDetinute << " animale. " << endl;
 }
 
-Client::Client(string nP, int v)
+Client::Client(string numePrenume, int varsta)
 {
     cout << "Constructor pentru clasa Client cu 2 parametrii: " << endl;
-    numePrenume = nP;
-    varsta = new int(v); // creaza un pointer cu valoarea din v
+    this->numePrenume = numePrenume;
+    this->varsta = new int(varsta); // creaza un pointer cu valoarea din v
     numarClienti++;
-    cout << numePrenume << " cu varsta de " << *varsta << " ani. " << endl;
+    cout << this->numePrenume << " cu varsta de " << *this->varsta << " ani. " << endl;
 }
 
-Client::Client(string nP, double r, int aD)
+Client::Client(string numePrenume, double rating, int animaleDetinute)
 {
     cout << "Constructor pentru clasa Client cu 3 parametrii: " << endl;
-    numePrenume = nP;
-    rating = r;
-    animaleDetinute = aD;
+    this->numePrenume = numePrenume;
+    this->rating = rating;
+    this->animaleDetinute = animaleDetinute;
     numarClienti++;
-    cout << numePrenume << " are ratingul de " << rating << " puncte si a detinut " << animaleDetinute << " animale. " << endl;
+    cout << this->numePrenume << " are ratingul de " << this->rating << " puncte si a detinut " << this->animaleDetinute << " animale. " << endl;
 }
 
-Client::Client(string nP, int v, double r, int aD)
+Client::Client(string numePrenume, int varsta, double rating, int animaleDetinute)
 {
     cout << "Constructor pentru clasa Client cu 4 parametrii: " << endl;
-    numePrenume = nP;
-    varsta = new int(v);
-    rating = r;
-    animaleDetinute = aD;
+    this->numePrenume = numePrenume;
+    this->varsta = new int(varsta);
+    this->rating = rating;
+    this->animaleDetinute = animaleDetinute;
     numarClienti++;
-    cout << numePrenume << " cu varsta de " << *varsta << " ani, are ratingul de " << rating << " puncte si a detinut " << animaleDetinute << " animale. " << endl;
+    cout << this->numePrenume << " cu varsta de " << *this->varsta << " ani, are ratingul de " << this->rating << " puncte si a detinut " << this->animaleDetinute << " animale. " << endl;
 }
 
-Client::Client(string nP, int v, char s, double r, int aD)
+Client::Client(string numePrenume, int varsta, char sex, double rating, int animaleDetinute)
 {
     cout << "Constructor pentru clasa Client cu 5 parametrii: " << endl;
-    numePrenume = nP;
-    varsta = new int(v);
-    sex = new char(s);
-    rating = r;
-    animaleDetinute = aD;
+    this->numePrenume = numePrenume;
+    this->varsta = new int(varsta);
+    this->sex = new char(sex);
+    this->rating = rating;
+    this->animaleDetinute = animaleDetinute;
     numarClienti++;
-    cout << numePrenume << " cu varsta de " << *varsta << " ani si sexul " << *sex << ", are ratingul de " << rating << " puncte si a detinut " << animaleDetinute << " animale. " << endl;
+    cout << this->numePrenume << " cu varsta de " << *this->varsta << " ani si sexul " << *this->sex << ", are ratingul de " << this->rating << " puncte si a detinut " << this->animaleDetinute << " animale. " << endl;
 }
 
 // destructor
 Client::~Client()
 {
-    cout << "Distruge: " << endl;
-    cout << numePrenume << " " << *varsta << " " << *sex << " " << rating << " " << animaleDetinute << endl;
-    delete varsta;
-    delete sex;
+    cout << "Distruge clientul: " << endl;
+    cout << this->numePrenume << endl;
+    delete this->varsta;
+    delete this->sex;
 }
 
 class Animal
@@ -120,31 +120,31 @@ private:
 
 public:
     // setters
-    void setNume(string numeNou) { nume = numeNou; }
-    void setSex(char sexNou) { sex = sexNou; }
-    void setEsteCumparat(bool esteCumparatNou) { esteCumparat = esteCumparatNou; }
-    void setVarsta(int varstaNou) { varsta = varstaNou; }
-    void setAreProblemeSpeciale(bool areProblemeSpecialeNou) { areProblemeSpeciale = areProblemeSpecialeNou; }
-    void setGreutate(float greutateNoua) { greutate = greutateNoua; }
-    void setPret(float pretNou) { pret = pretNou; }
+    void setNume(string nume) { this->nume = nume; }
+    void setSex(char sex) { this->sex = sex; }
+    void setEsteCumparat(bool esteCumparat) { this->esteCumparat = esteCumparat; }
+    void setVarsta(int varsta) { this->varsta = varsta; }
+    void setAreProblemeSpeciale(bool areProblemeSpeciale) { this->areProblemeSpeciale = areProblemeSpeciale; }
+    void setGreutate(float greutate) { this->greutate = greutate; }
+    void setPret(float pret) { this->pret = pret; }
     static void setNumarAnimale(int numarAnimaleNou) { numarAnimale = numarAnimaleNou; }
 
     // getters
-    string getNume() { return nume; }
-    char getSex() { return sex; }
-    bool getEsteCumparat() { return esteCumparat; }
-    int getVarsta() { return varsta; }
-    bool getAreProblemeSpeciale() { return areProblemeSpeciale; }
-    float getGreutate() { return greutate; }
-    float getPret() { return pret; }
+    string getNume() { return this->nume; }
+    char getSex() { return this->sex; }
+    bool getEsteCumparat() { return this->esteCumparat; }
+    int getVarsta() { return this->varsta; }
+    bool getAreProblemeSpeciale() { return this->areProblemeSpeciale; }
+    float getGreutate() { return this->greutate; }
+    float getPret() { return this->pret; }
     static int getNumarAnimale() { return numarAnimale; }
 
     // constructors
     Animal();
-    Animal(string n, float p);
-    Animal(string n, int v, float g);
-    Animal(string n, bool eCump, bool aPS, float p);
-    Animal(string n, char s, bool eCump, int v, bool aPS, float g, float p);
+    Animal(string nume, float pret);
+    Animal(string nume, int varsta, float greutate);
+    Animal(string nume, bool esteCumparat, bool areProblemeSpeciale, float pret);
+    Animal(string nume, char sex, bool eesteCumparat, int varsta, bool areProblemeSpeciale, float greutate, float pret);
 
     // destructors
     ~Animal();
@@ -156,61 +156,61 @@ int Animal::numarAnimale = 0;
 Animal::Animal()
 {
     cout << "Constructor de initializare: " << endl;
-    nume = "Anonim";
-    sex = '-';
-    esteCumparat = 0;
-    varsta = 0;
-    areProblemeSpeciale = 0;
-    greutate = 0;
-    pret = 0;
+    this->nume = "Anonim";
+    this->sex = '-';
+    this->esteCumparat = 0;
+    this->varsta = 0;
+    this->areProblemeSpeciale = 0;
+    this->greutate = 0;
+    this->pret = 0;
     numarAnimale++;
 }
 
-Animal::Animal(string n, float p)
+Animal::Animal(string nume, float pret)
 {
     cout << "Constructor pentru clasa Animal cu 2 parametrii: " << endl;
-    nume = n;
-    pret = p;
+    this->nume = nume;
+    this->pret = pret;
     numarAnimale++;
 }
 
-Animal::Animal(string n, int v, float g)
+Animal::Animal(string nume, int varsta, float greutate)
 {
     cout << "Constructor pentru clasa Animal cu 3 parametrii: " << endl;
-    nume = n;
-    varsta = v;
-    greutate = g;
+    this->nume = nume;
+    this->varsta = varsta;
+    this->greutate = greutate;
     numarAnimale++;
 }
 
-Animal::Animal(string n, bool eCump, bool aPS, float p)
+Animal::Animal(string nume, bool esteCumparat, bool areProblemeSpeciale, float pret)
 {
     cout << "Constructor pentru clasa Animal cu 4 parametrii: " << endl;
-    nume = n;
-    esteCumparat = eCump;
-    areProblemeSpeciale = aPS;
-    pret = p;
+    this->nume = nume;
+    this->esteCumparat = esteCumparat;
+    this->areProblemeSpeciale = areProblemeSpeciale;
+    this->pret = pret;
     numarAnimale++;
 }
 
-Animal::Animal(string n, char s, bool eCump, int v, bool aPS, float g, float p)
+Animal::Animal(string nume, char sex, bool esteCumparat, int varsta, bool areProblemeSpeciale, float greutate, float pret)
 {
     cout << "Constructor pentru clasa Animal cu 7 parametrii: " << endl;
-    nume = n;
-    sex = s;
-    esteCumparat = eCump;
-    varsta = v;
-    areProblemeSpeciale = aPS;
-    greutate = g;
-    pret = p;
+    this->nume = nume;
+    this->sex = sex;
+    this->esteCumparat = esteCumparat;
+    this->varsta = varsta;
+    this->areProblemeSpeciale = areProblemeSpeciale;
+    this->greutate = greutate;
+    this->pret = pret;
     numarAnimale++;
 }
 
 // destructor
 Animal::~Animal()
 {
-    cout << "Distruge: " << endl;
-    cout << nume << endl;
+    cout << "Distruge animalul: " << endl;
+    cout << this->nume << endl;
 }
 
 class Eveniment
@@ -223,22 +223,22 @@ private:
 
 public:
     //setters
-    void setClient(Client clientNou) { client = clientNou; }
-    void setAnimal(Animal animalNou) { animal = animalNou; }
-    void setData(string dataNoua) { data = dataNoua; }
-    void setTipEveniment(char tipEvenimentNou) { tipEveniment = tipEvenimentNou; }
+    void setClient(Client client) { this->client = client; }
+    void setAnimal(Animal animal) { this->animal = animal; }
+    void setData(string data) { this->data = data; }
+    void setTipEveniment(char tipEveniment) { this->tipEveniment = tipEveniment; }
 
     // getters
-    Client getClient() { return client; }
-    Animal getAnimal() { return animal; }
-    string getData() { return data; }
-    char getTipEveniment() { return tipEveniment; }
+    Client getClient() { return this->client; }
+    Animal getAnimal() { return this->animal; }
+    string getData() { return this->data; }
+    char getTipEveniment() { return this->tipEveniment; }
 
     //constructors
     Eveniment();
-    Eveniment(Client c, char tE);
-    Eveniment(Client c, string d, char tE);
-    Eveniment(Client c, Animal a, string d, char tE);
+    Eveniment(Client client, char tipEveniment);
+    Eveniment(Client client, string data, char tipEveniment);
+    Eveniment(Client client, Animal animal, string data, char tipEveniment);
 
     //destructors
     ~Eveniment();
@@ -248,57 +248,65 @@ public:
 Eveniment::Eveniment()
 {
     //TO DO overload = for Client and Animal
+    // this->client
+    // this->animal
+    this->data = "DD/MM/YYYY";
+    this->tipEveniment = 'X';
 }
 
-Eveniment::Eveniment(Client c, char tE)
+Eveniment::Eveniment(Client client, char tipEveniment)
 {
-    client = c;
-    tipEveniment = tE;
+    this->client = client;
+    this->tipEveniment = tipEveniment;
 }
 
-Eveniment::Eveniment(Client c, string d, char tE)
+Eveniment::Eveniment(Client client, string data, char tipEveniment)
 {
-    client = c;
-    data = d;
-    tipEveniment = tE;
+    this->client = client;
+    this->data = data;
+    this->tipEveniment = tipEveniment;
 }
 
-Eveniment::Eveniment(Client c, Animal a, string d, char tE)
+Eveniment::Eveniment(Client client, Animal animal, string data, char tipEveniment)
 {
-    client = c;
-    animal = a;
-    data = d;
-    tipEveniment = tE;
+    this->client = client;
+    this->animal = animal;
+    this->data = data;
+    this->tipEveniment = tipEveniment;
 }
 
 // destructor
 Eveniment::~Eveniment()
 {
-    cout << "Distruge: " << endl;
-    cout << client.getNumePrenume() << endl;
+    cout << "Distruge evenimentul pentru clientul: " << endl;
+    cout << this->client.getNumePrenume() << endl;
 }
 
 class Registru
 {
 private:
-    const string numeMagazin = "NumeMagazin";
+    const string numeMagazin = "Lumea Animalelor";
     Eveniment eveniment; //TO DO: schimba in lista de evenimente dupa ce rezolvam cu []
     int an;
     double bilant;
 
 public:
     // setters
-    void setEveniment(Eveniment evenimentNou) { eveniment = evenimentNou; }
+    void setEveniment(Eveniment eveniment) { this->eveniment = eveniment; }
+    void setAn(int an) { this->an = an; }
+    void setBilant(double bilant) { this->bilant = bilant; }
 
     // getters
-    Eveniment getEveniment() { return eveniment; }
-    string getNumeMagazin() { return numeMagazin; }
+    Eveniment getEveniment() { return this->eveniment; }
+    int getAn() { return this->an; }
+    double getBilant() { return this->bilant; }
+    string getNumeMagazin() { return this->numeMagazin; }
 
     //cpnstructors
     Registru();
-    Registru(Eveniment e);
-    Registru(Eveniment e, int anNou);
-    Registru(Eveniment e, int anNou, double b);
+    Registru(Eveniment eveniment);
+    Registru(Eveniment eveniment, int an);
+    Registru(Eveniment eveniment, int an, double bilant);
 
     // destructor
     ~Registru();
@@ -307,33 +315,33 @@ public:
 // constructors
 Registru::Registru()
 { // overload la =
-    an = 0;
-    bilant = 0;
+    this->an = 0;
+    this->bilant = 0;
 }
 
-Registru::Registru(Eveniment e)
+Registru::Registru(Eveniment eveniment)
 {
-    eveniment = e;
+    this->eveniment = eveniment;
 }
 
-Registru::Registru(Eveniment e, int anNou)
+Registru::Registru(Eveniment eveniment, int an)
 {
-    eveniment = e;
-    an = anNou;
+    this->eveniment = eveniment;
+    this->an = an;
 }
 
-Registru::Registru(Eveniment e, int anNou, double b)
+Registru::Registru(Eveniment eveniment, int an, double bilant)
 {
-    eveniment = e;
-    an = anNou;
-    bilant = b;
+    this->eveniment = eveniment;
+    this->an = an;
+    this->bilant = bilant;
 }
 
 // destructor
 Registru::~Registru()
 {
-    cout << "Distruge: " << endl;
-    cout << eveniment.getClient().getNumePrenume() << endl;
+    cout << "Distruge din registru evenimentul pentru clientul: " << endl;
+    cout << this->eveniment.getClient().getNumePrenume() << endl;
 }
 
 int main()
