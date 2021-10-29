@@ -1,5 +1,5 @@
 #include <iostream>
-#include <string.h>
+#include <string>
 
 using namespace std;
 
@@ -9,7 +9,8 @@ using namespace std;
 //implicit modificat tot ce trebuie din Registru ca sa fie corect
 //overload de +, de == de ++ 
 
-class Client
+class Client //daca are rating mic varsta inaintata si experienta mica cu animale e o variabilia in care zic nu (nu are voie sa adopte/cumpere)
+             //in functie de niste factori(rating) sa avem discount pentru 
 {
 private:
     string numePrenume;
@@ -155,22 +156,26 @@ Client& Client::operator=(const Client& other)
 // overload operator<<
 ostream& operator<<(ostream& out, const Client& c)
 {
-    out << c.numePrenume << " " << *c.varsta << " " << *c.sex << " " << c.rating << " " << c.animaleDetinute << endl;
+    out << "\nNume Prenume: " << c.numePrenume;
+    out << "\nVarsta: " << *c.varsta;
+    out << "\nSex: " << *c.sex;
+    out << "\nRating: " << c.rating;
+    out<< "\nAnimale detinute: " << c.animaleDetinute << endl;
     return out;
 }
 
 // overload operator>>
 istream& operator>>(istream& in, Client& c)
 {
-    cout << "Nume Prenume: " << endl;
-    in >> c.numePrenume;
-    cout << "Varsta: " << endl;
+    cout << "\nNume Prenume: ";
+    getline(in, c.numePrenume);
+    cout << "\nVarsta: ";
     in >> *c.varsta;
-    cout << "Sex: " << endl;
+    cout << "\nSex: ";
     in >> *c.sex;
-    cout << "Rating: " << endl;
+    cout << "\nRating: ";
     in >> c.rating;
-    cout << "Animale detinute: " << endl;
+    cout << "\nAnimale detinute: ";
     in >> c.animaleDetinute;
     return in;
 }
@@ -184,7 +189,7 @@ Client::~Client()
     delete this->sex;
 }
 
-class Animal
+class Animal // functionalitate: o functie care sa verifice daca animalul e overweight si daca e, sa se modifice areprblemespeciale din False in True daca e cazul 
 {
 private:
     string nume;
@@ -330,26 +335,32 @@ Animal& Animal::operator=(const Animal& other)
 // overload operator<<
 ostream& operator<<(ostream& out, const Animal& a)
 {
-    out << a.nume << " " << a.sex << " " << a.esteCumparat << " " << a.varsta << " " << a.areProblemeSpeciale << " " << a.greutate << " " << a.pret << endl;
+    out << "\nNume: " << a.nume;
+    out << "\nSex: " << a.sex;
+    out << "\nEste cumparat: " << a.esteCumparat;
+    out << "\nVarsta: " << a.varsta;
+    out << "\nAre probleme speciale: " << a.areProblemeSpeciale;
+    out << "\nGreutate: " << a.greutate;
+    out << "\nPret: " << a.pret << endl;
     return out;
 }
 
 // overload operator>>
 istream& operator>>(istream& in,  Animal& a)
 {
-    cout << "Nume: "<<endl;
-    in >> a.nume;
-    cout << "Sex: " << endl;
+    cout << "\nNume: ";
+    getline(in, a.nume);
+    cout << "\nSex: ";
     in >> a.sex;
-    cout << "Este cumparat: " << endl;
+    cout << "\nEste cumparat: ";
     in >> a.esteCumparat;
-    cout << "Varsta: " << endl;
+    cout << "\nVarsta: ";
     in >> a.varsta;
-    cout << "Are probleme speciale: " << endl;
+    cout << "\nAre probleme speciale: ";
     in >> a.areProblemeSpeciale;
-    cout << "Greutate: " << endl;
+    cout << "\nGreutate: ";
     in >> a.greutate;
-    cout << "Pret: " << endl;
+    cout << "\nPret: ";
     in >> a.pret;
     return in;
 }
@@ -361,284 +372,289 @@ Animal::~Animal()
     cout << this->nume << endl;
 }
 
-class Eveniment
+class Hrana
 {
 private:
-    Client client;
-    Animal animal;
-    string data;
-    char tipEveniment; // A : de adoptat; L : lasat spre adoptie
+    string nume;
+    const string distribuitor;
+    float pret;
+    string tipAnimal;
+    bool esteUmeda;
+    int valNutritiva;
 
 public:
-    //setters
-    void setClient(Client client) { this->client = client; }
-    void setAnimal(Animal animal) { this->animal = animal; }
-    void setData(string data) { this->data = data; }
-    void setTipEveniment(char tipEveniment) { this->tipEveniment = tipEveniment; }
+    // setters
+    void setNume(string nume) { this->nume = nume;  }
+    void setPret(float pret) { this->pret = pret; }
+    void setTipAnimal(string tipAnimal) { this->tipAnimal = tipAnimal; }
+    void setEsteUmeda(bool esteUmeda) { this->esteUmeda = esteUmeda; }
+    void setValNutritiva(int valNutritiva) { this->valNutritiva = valNutritiva; }
 
     // getters
-    Client getClient() { return this->client; }
-    Animal getAnimal() { return this->animal; }
-    string getData() { return this->data; }
-    char getTipEveniment() { return this->tipEveniment; }
+    string getNume() { return this->nume; }
+    float getPret() { return this->pret; }
+    string getTipAnimal() { return this->tipAnimal; }
+    bool getEsteUmeda() { return this->esteUmeda; }
+    int getValNutritiva() { return this->valNutritiva; }
 
-    //constructors
-    Eveniment();
-    Eveniment(Client client, char tipEveniment);
-    Eveniment(Client client, string data, char tipEveniment);
-    Eveniment(Client client, Animal animal, string data, char tipEveniment);
+    // constructors
+    Hrana();
+    Hrana(string nume, float pret);
+    Hrana(string nume, float pret, bool esteUmeda);
+    Hrana(string nume, float pret, string tipAnimal, bool esteUmeda, int valNutritiva);
 
-    // copy constructor
-    Eveniment(const Eveniment& other);
+    //copy constructor 
+    Hrana(const Hrana& other);
 
     // overload operator=
-    Eveniment& operator=(const Eveniment& other);
+    Hrana& operator=(const Hrana& other);
 
     // overload operator<<
-    friend ostream& operator<<(ostream& out, const Eveniment& e);
+    friend ostream& operator<<(ostream& out, Hrana& h);
 
     // overload operator>>
-    friend istream& operator>>(istream& in, Eveniment& e);
+    friend istream& operator>>(istream& in, Hrana& h);
 
-    //destructors
-    ~Eveniment();
+    // destructor 
+    ~Hrana();
+
 };
 
-//constructors
-Eveniment::Eveniment()
+// constructors
+Hrana::Hrana()
 {
-    this->data = "DD/MM/YYYY";
-    this->tipEveniment = 'X';
+    this->nume = "Anonim";
+    this->pret = 0;
+    this->tipAnimal = "Anonim";
+    this->esteUmeda = false;
+    this->valNutritiva = 0;
 }
 
-Eveniment::Eveniment(Client client, char tipEveniment)
+Hrana::Hrana(string nume, float pret)
 {
-    this->client = client;
-    this->tipEveniment = tipEveniment;
+    this->nume = nume;
+    this->pret = pret;
 }
 
-Eveniment::Eveniment(Client client, string data, char tipEveniment)
+Hrana::Hrana(string nume, float pret, bool esteUmeda)
 {
-    this->client = client;
-    this->data = data;
-    this->tipEveniment = tipEveniment;
+    this->nume = nume;
+    this->pret = pret;
+    this->esteUmeda = esteUmeda;
 }
 
-Eveniment::Eveniment(Client client, Animal animal, string data, char tipEveniment)
+Hrana::Hrana(string nume, float pret, string tipAnimal, bool esteUmeda, int valNutritiva)
 {
-    this->client = client;
-    this->animal = animal;
-    this->data = data;
-    this->tipEveniment = tipEveniment;
+    this->nume = nume;
+    this->pret = pret;
+    this->tipAnimal = tipAnimal;
+    this->esteUmeda = esteUmeda;
+    this->valNutritiva = valNutritiva;
 }
 
 // copy constructor
-Eveniment::Eveniment(const Eveniment& other)
+Hrana::Hrana(const Hrana& other)
 {
-    this->client = other.client;
-    this->animal = other.animal;
-    this->data = other.data;
-    this->tipEveniment = other.tipEveniment;
+    this->nume = other.nume;
+    this->pret = other.pret;
+    this->tipAnimal = other.tipAnimal;
+    this->esteUmeda = other.esteUmeda;
+    this->valNutritiva = other.valNutritiva;
 }
 
 // overload operator=
-Eveniment& Eveniment::operator=(const Eveniment& other)
+Hrana& Hrana::operator=(const Hrana& other)
 {
     if (this != &other)
     {
-        this->client = other.client;
-        this->animal = other.animal;
-        this->data = other.data;
-        this->tipEveniment = other.tipEveniment;
+        this->nume = other.nume;
+        this->pret = other.pret;
+        this->tipAnimal = other.tipAnimal;
+        this->esteUmeda = other.esteUmeda;
+        this->valNutritiva = other.valNutritiva;
     }
     return *this;
 }
 
 // overload operator<<
-ostream& operator<<(ostream& out, const Eveniment& e)
+ostream& operator<<(ostream& out, Hrana& h)
 {
-    out << e.client << " " << e.animal << " " << e.data << " " << e.tipEveniment << endl;
+    out << "\nNume: " << h.nume;
+    out << "\nPret: " << h.pret;
+    out << "\nTip animal: " << h.tipAnimal;
+    out << "\nEste umeda: " << h.esteUmeda;
+    out << "\nValoare nutritiva: " << h.valNutritiva;
     return out;
 }
 
 // overload operator>>
-istream& operator>>(istream& in, Eveniment& e)
+istream& operator>>(istream& in, Hrana& h)
 {
-    cout << "Client: " << endl;
-    in >> e.client;
-    cout << "Animal: " << endl;
-    in >> e.animal;
-    cout << "Data: " << endl;
-    in >> e.data;
-    cout << "Tip eveniment: " << endl;
-    in >> e.tipEveniment;
+    cout << "\nNume: ";
+    getline(in, h.nume);
+    cout << "\nPret: ";
+    in >> h.pret;
+    cout << "\nTip animal: ";
+    getline(in, h.tipAnimal);
+    cout << "\nEste umeda: ";
+    in >> h.esteUmeda;
+    cout << "\nValoare nutritiva: ";
+    in >> h.valNutritiva;
     return in;
 }
 
 // destructor
-Eveniment::~Eveniment()
+Hrana::~Hrana()
 {
-    cout << "Distruge evenimentul pentru clientul: " << endl;
-    cout << this->client.getNumePrenume() << endl;
+    cout << "Distruge hrana: " << this->nume << endl;
 }
 
-class Registru
+class Hainuta
 {
 private:
-    const string numeMagazin = "Lumea Animalelor";
-    Eveniment eveniment; //TO DO: schimba in lista de evenimente dupa ce rezolvam cu []
-    int nrEvenimente;
-    int an;
-    double bilant;
+    string denumire;
+    char marime;
+    double pret;
+    string culoare;
 
 public:
     // setters
-    void setEveniment(Eveniment eveniment) { this->eveniment = eveniment; }
-    void setNrEveniment(int nrEveniment) { this->nrEvenimente = nrEvenimente; }
-    void setAn(int an) { this->an = an; }
-    void setBilant(double bilant) { this->bilant = bilant; }
+    void setDenumire(string denumire) { this->denumire = denumire; }
+    void setMarime(char marime) { this->marime = marime; }
+    void setPret(double pret) { this->pret = pret; }
+    void setCuloare(string culoare) { this->culoare = culoare; }
 
     // getters
-    Eveniment getEveniment() { return this->eveniment; }
-    int getNrEvenimente() { return this->nrEvenimente; }
-    int getAn() { return this->an; }
-    double getBilant() { return this->bilant; }
-    string getNumeMagazin() { return this->numeMagazin; }
+    string getDenumire() { return this->denumire; }
+    char getMarime() { return this->marime; }
+    double getPret() { return this->pret; }
+    string getCuloare() { return this->culoare; }
 
-    //constructors
-    Registru();
-    Registru(Eveniment eveniment);
-    Registru(Eveniment eveniment, int an);
-    Registru(Eveniment eveniment,int nrEvenimente, int an, double bilant);
+    // constructors 
+    Hainuta();
+    Hainuta(string denumire, char marime);
+    Hainuta(string denumire, char marime, double pret);
+    Hainuta(string denumire, char marime, double pret, string culoare);
 
     // copy constructor
-    Registru(const Registru& other);
+    Hainuta(const Hainuta& other);
 
     // overload operator=
-    Registru& operator=(const Registru& other);
+    Hainuta& operator=(const Hainuta& other);
 
-    //overload operator<<
-    friend ostream& operator<<(ostream& out, const Registru& r);
+    // overload operator<<
+    friend ostream& operator<<(ostream& out, Hainuta& h);
 
     //overload operator>>
-    friend istream& operator>>(istream& in, Registru& r);
+    friend istream& operator>>(istream& in, Hainuta& h);
 
     // destructor
-    ~Registru();
+    ~Hainuta();
+
+    
 };
 
 // constructors
-Registru::Registru()
-{ // overload la =
-    this->nrEvenimente = 0;
-    this->an = 0;
-    this->bilant = 0;
+Hainuta::Hainuta()
+{
+    this->denumire = "Anonim";
+    this->marime = '-';
+    this->pret = 0;
+    this->culoare = "Anonim";
 }
 
-Registru::Registru(Eveniment eveniment)
+Hainuta::Hainuta(string denumire, char marime)
 {
-    this->nrEvenimente = 0;
-    this->eveniment = eveniment;
+    this->denumire = denumire;
+    this->marime = marime;
 }
 
-Registru::Registru(Eveniment eveniment, int an)
+Hainuta::Hainuta(string denumire, char marime, double pret)
 {
-    this->nrEvenimente = 0;
-    this->eveniment = eveniment;
-    this->an = an;
+    this->denumire = denumire;
+    this->marime = marime;
+    this->pret = pret;
 }
 
-Registru::Registru(Eveniment eveniment,int nrEvenimente, int an, double bilant)
+Hainuta::Hainuta(string denumire, char marime, double pret, string culoare)
 {
-    this->nrEvenimente = nrEvenimente;
-    this->eveniment = eveniment;
-    this->an = an;
-    this->bilant = bilant;
+    this->denumire = denumire;
+    this->marime = marime;
+    this->pret = pret;
+    this->culoare = culoare;
 }
 
 // copy constructor
-Registru::Registru(const Registru& other)
+Hainuta::Hainuta(const Hainuta& other)
 {
-    this->eveniment = other.eveniment;
-    this->an = other.an;
-    this->bilant = other.bilant;
+    this->denumire = other.denumire;
+    this->marime = other.marime;
+    this->pret = other.pret;
+    this->culoare = other.culoare;
 }
 
-// overload operator<<
-ostream& operator<<(ostream& out, const Registru& r)
-{
-    out << r.numeMagazin << " " << r.eveniment << " " << r.an << " " << r.bilant << endl;
-    return out;
-}
-
-//overload operator>>
-istream& operator>>(istream& in, Registru& r)
-{
-    cout << "Eveniment: " << endl;
-    in >> r.eveniment;
-    cout << "An: " << endl;
-    in >> r.an;
-    cout << "Bilant: " << endl;
-    in >> r.bilant;
-    return in;
-
-}
-
-//overload operator=
-Registru& Registru::operator=(const Registru& other)
+// overload operator =
+Hainuta& Hainuta:: operator=(const Hainuta& other)
 {
     if (this != &other)
     {
-        this->eveniment = other.eveniment;
-        this->an = other.an;
-        this->bilant = other.bilant;
+        this->denumire = other.denumire;
+        this->marime = other.marime;
+        this->pret = other.pret;
+        this->culoare = other.culoare;
     }
     return *this;
 }
 
-// destructor
-Registru::~Registru()
+// overload operator<<
+ostream& operator<<(ostream& out, Hainuta& h)
 {
-    cout << "Distruge din registru evenimentul pentru clientul: " << endl;
-    cout << this->eveniment.getClient().getNumePrenume() << endl;
+    out << "\nDenumire: " << h.denumire;
+    out << "\nMarime: " << h.marime;
+    out << "\nPret: " << h.pret;
+    out << "\nCuloare: " << h.culoare;
+    return out;
 }
+
+istream& operator>>(istream& in, Hainuta& h)
+{
+    cout << "\nDenumire: ";
+    getline(in, h.denumire);
+    cout << "\nMarime: ";
+    in >> h.marime;
+    cout << "\nPret: ";
+    in >> h.pret;
+    cout << "\nCuloare: ";
+    getline(in, h.culoare);
+    cout << endl;
+    return in;
+}
+
+// destructor 
+Hainuta::~Hainuta()
+{
+    cout << "Distruge Hainuta : ";
+    cout << this->denumire << " " << this->marime << endl;
+}
+
 
 int main()
 {
-    // Client c1("popescu", 7), c2("ionescu", 5, 3);
-    // Eveniment e1(c1, "12.09.2021", 'A'), e2(c2, "222", 'N'), e3;
-    // Registru r1(e1);
-    // e3 = e1;
-
-    /*Client c1("popescu", 7);
-    Client c2 = c1;
-    c2.setVarsta(new int(8));
-    cout << *c1.getVarsta() << endl;
-    cout << *c2.getVarsta() << endl;*/
-
-
-
-    //Registru::setNumarClienti(2);
-    //cout << Registru::getNumarClienti();
-    //Animal a1("pisica", 5, 5.239),a;
-    //Animal a2 = a1;
-    //a1.setVarsta(6);
-    //cout << a1.getVarsta() << endl;
-    //cout << a2.getVarsta() << endl;
-    //cin >> a;
-    //cout << a;
-    /*Client c;
-    cin >> c;
-    cout << c;*/
+    Animal a1;
+    cin >> a1;
+    cout << a1 << endl; 
+    Client c1;
+    cin >> c1;
+    cout << c1 << endl;
+    Hrana h1;
+    cin >> h1;
+    cout << h1 << endl;
+    Hainuta ha1;
+    cin >> ha1;
+    cout << ha1 << endl;
     
-
- /*   Eveniment e;
-    cin >> e;
-    cout << e;
-    cout << "Animalul este "<< e.getAnimal().getNume()<<endl;*/
-    Registru r;
-    cin >> r;
-    cout << r;
-
+    
+    
+  
     return 0;
 }
