@@ -168,7 +168,7 @@ ostream& operator<<(ostream& out, const Client& c)
 istream& operator>>(istream& in, Client& c)
 {
     cout << "\nNume Prenume: ";
-    getline(in, c.numePrenume);
+    in >> c.numePrenume;
     cout << "\nVarsta: ";
     in >> *c.varsta;
     cout << "\nSex: ";
@@ -183,8 +183,8 @@ istream& operator>>(istream& in, Client& c)
 // destructor
 Client::~Client()
 {
-    cout << "Distruge clientul: " << endl;
-    cout << this->numePrenume << endl;
+    cout << "\nDistruge clientul: " ;
+    cout << this->numePrenume ;
     delete this->varsta;
     delete this->sex;
 }
@@ -349,7 +349,7 @@ ostream& operator<<(ostream& out, const Animal& a)
 istream& operator>>(istream& in,  Animal& a)
 {
     cout << "\nNume: ";
-    getline(in, a.nume);
+    in >> a.nume;
     cout << "\nSex: ";
     in >> a.sex;
     cout << "\nEste cumparat: ";
@@ -368,8 +368,8 @@ istream& operator>>(istream& in,  Animal& a)
 // destructor
 Animal::~Animal()
 {
-    cout << "Distruge animalul: " << endl;
-    cout << this->nume << endl;
+    cout << "\nDistruge animalul: ";;
+    cout << this->nume ;
 }
 
 class Hrana
@@ -491,11 +491,11 @@ ostream& operator<<(ostream& out, Hrana& h)
 istream& operator>>(istream& in, Hrana& h)
 {
     cout << "\nNume: ";
-    getline(in, h.nume);
+    in >> h.nume;
     cout << "\nPret: ";
     in >> h.pret;
     cout << "\nTip animal: ";
-    getline(in, h.tipAnimal);
+    in >> h.tipAnimal;
     cout << "\nEste umeda: ";
     in >> h.esteUmeda;
     cout << "\nValoare nutritiva: ";
@@ -506,7 +506,8 @@ istream& operator>>(istream& in, Hrana& h)
 // destructor
 Hrana::~Hrana()
 {
-    cout << "Distruge hrana: " << this->nume << endl;
+    cout << "\nDistruge hrana: ";
+    cout << this->nume;
 }
 
 class Hainuta
@@ -619,13 +620,13 @@ ostream& operator<<(ostream& out, Hainuta& h)
 istream& operator>>(istream& in, Hainuta& h)
 {
     cout << "\nDenumire: ";
-    getline(in, h.denumire);
+    in >> h.denumire;
     cout << "\nMarime: ";
     in >> h.marime;
     cout << "\nPret: ";
     in >> h.pret;
     cout << "\nCuloare: ";
-    getline(in, h.culoare);
+    in >> h.culoare;
     cout << endl;
     return in;
 }
@@ -633,8 +634,8 @@ istream& operator>>(istream& in, Hainuta& h)
 // destructor 
 Hainuta::~Hainuta()
 {
-    cout << "Distruge Hainuta : ";
-    cout << this->denumire << " " << this->marime << endl;
+    cout << "\nDistruge Hainuta : " ;
+    cout << this->denumire << " " << this->marime ;
 }
 
 
@@ -653,8 +654,5 @@ int main()
     cin >> ha1;
     cout << ha1 << endl;
     
-    
-    
-  
     return 0;
 }
