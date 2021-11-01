@@ -200,6 +200,7 @@ private:
     float greutate;
     float pret;
     static int numarAnimale;
+    const int idAnimal;
 
 public:
     // setters
@@ -210,7 +211,7 @@ public:
     void setAreProblemeSpeciale(bool areProblemeSpeciale) { this->areProblemeSpeciale = areProblemeSpeciale; }
     void setGreutate(float greutate) { this->greutate = greutate; }
     void setPret(float pret) { this->pret = pret; }
-    static void setNumarAnimale(int numarAnimaleNou) { numarAnimale = numarAnimaleNou; }
+    //static void setNumarAnimale(int numarAnimaleNou) { numarAnimale = numarAnimaleNou; }
 
     // getters
     string getNume() { return this->nume; }
@@ -221,6 +222,7 @@ public:
     float getGreutate() { return this->greutate; }
     float getPret() { return this->pret; }
     static int getNumarAnimale() { return numarAnimale; }
+    const int getIdAnimal() { return idAnimal; }
 
     // constructors
     Animal();
@@ -251,7 +253,7 @@ public:
 int Animal::numarAnimale = 0;
 
 // constructors
-Animal::Animal()
+Animal::Animal() : idAnimal(numarAnimale) 
 {
     cout << "Constructor de initializare: " << endl;
     this->nume = "Anonim";
@@ -264,7 +266,7 @@ Animal::Animal()
     numarAnimale++;
 }
 
-Animal::Animal(string nume, float pret)
+Animal::Animal(string nume, float pret) : idAnimal(numarAnimale)
 {
     cout << "Constructor pentru clasa Animal cu 2 parametrii: " << endl;
     this->nume = nume;
@@ -272,7 +274,7 @@ Animal::Animal(string nume, float pret)
     numarAnimale++;
 }
 
-Animal::Animal(string nume, int varsta, float greutate)
+Animal::Animal(string nume, int varsta, float greutate) : idAnimal(numarAnimale)
 {
     cout << "Constructor pentru clasa Animal cu 3 parametrii: " << endl;
     this->nume = nume;
@@ -281,7 +283,7 @@ Animal::Animal(string nume, int varsta, float greutate)
     numarAnimale++;
 }
 
-Animal::Animal(string nume, bool esteCumparat, bool areProblemeSpeciale, float pret)
+Animal::Animal(string nume, bool esteCumparat, bool areProblemeSpeciale, float pret) : idAnimal(numarAnimale)
 {
     cout << "Constructor pentru clasa Animal cu 4 parametrii: " << endl;
     this->nume = nume;
@@ -291,7 +293,7 @@ Animal::Animal(string nume, bool esteCumparat, bool areProblemeSpeciale, float p
     numarAnimale++;
 }
 
-Animal::Animal(string nume, char sex, bool esteCumparat, int varsta, bool areProblemeSpeciale, float greutate, float pret)
+Animal::Animal(string nume, char sex, bool esteCumparat, int varsta, bool areProblemeSpeciale, float greutate, float pret) : idAnimal(numarAnimale)
 {
     cout << "Constructor pentru clasa Animal cu 7 parametrii: " << endl;
     this->nume = nume;
@@ -305,7 +307,7 @@ Animal::Animal(string nume, char sex, bool esteCumparat, int varsta, bool arePro
 }
 
 // copy constructor
-Animal::Animal(const Animal& other)
+Animal::Animal(const Animal& other) : idAnimal(other.idAnimal)
 {
     this->nume = other.nume;
     this->sex = other.sex;
@@ -641,8 +643,11 @@ Hainuta::~Hainuta()
 
 int main()
 {
-    Animal a1;
-    cin >> a1;
+    Animal a1("piscot",2,2.8), a2("lusi",344), a3;
+    Animal a4 = a1;
+    cout << a2.getIdAnimal()<<endl;
+    cout << a4.getIdAnimal();
+    /*cin >> a1;
     cout << a1 << endl; 
     Client c1;
     cin >> c1;
@@ -652,7 +657,7 @@ int main()
     cout << h1 << endl;
     Hainuta ha1;
     cin >> ha1;
-    cout << ha1 << endl;
+    cout << ha1 << endl;*/
     
     return 0;
 }
