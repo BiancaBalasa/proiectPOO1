@@ -3,13 +3,212 @@
 
 using namespace std;
 
-//TO DO:
-//Overload de [] la toate clase
-//Modificat fieldu eveniment de tip Eveniment din registru sa fie numit evenimente si sa fie de tip Eveniment[]
-//implicit modificat tot ce trebuie din Registru ca sa fie corect
-//overload de +, de == de ++ 
+class Animal // functionalitate: o functie care sa verifice daca animalul e overweight si daca e, sa se modifice areprblemespeciale din False in True daca e cazul 
+{
+private:
+    string nume;
+    char sex; // M sau F
+    bool esteCumparat;
+    int varsta;
+    bool areProblemeSpeciale; // 0: nu are probleme; 1: are probleme
+    float greutate;
+    float pret;
+    static int numarAnimale;
+    const int idAnimal;
 
-class Client //daca are rating mic varsta inaintata si experienta mica cu animale e o variabilia in care zic nu (nu are voie sa adopte/cumpere)
+public:
+    // setters
+    void setNume(string nume) { this->nume = nume; }
+    void setSex(char sex) { this->sex = sex; }
+    void setEsteCumparat(bool esteCumparat) { this->esteCumparat = esteCumparat; }
+    void setVarsta(int varsta) { this->varsta = varsta; }
+    void setAreProblemeSpeciale(bool areProblemeSpeciale) { this->areProblemeSpeciale = areProblemeSpeciale; }
+    void setGreutate(float greutate) { this->greutate = greutate; }
+    void setPret(float pret) { this->pret = pret; }
+    //static void setNumarAnimale(int numarAnimaleNou) { numarAnimale = numarAnimaleNou; }
+
+    // getters
+    string getNume() { return this->nume; }
+    char getSex() { return this->sex; }
+    bool getEsteCumparat() { return this->esteCumparat; }
+    int getVarsta() { return this->varsta; }
+    bool getAreProblemeSpeciale() { return this->areProblemeSpeciale; }
+    float getGreutate() { return this->greutate; }
+    float getPret() { return this->pret; }
+    static int getNumarAnimale() { return numarAnimale; }
+    const int getIdAnimal() { return idAnimal; }
+
+    // constructors
+    Animal();
+    Animal(string nume, float pret);
+    Animal(string nume, int varsta, float greutate);
+    Animal(string nume, bool esteCumparat, bool areProblemeSpeciale, float pret);
+    Animal(string nume, char sex, bool eesteCumparat, int varsta, bool areProblemeSpeciale, float greutate, float pret);
+
+    //copy constructor
+    Animal(const Animal& other);
+
+    // overload operator=
+    Animal& operator=(const Animal& other);
+
+    // overload operator<<
+    friend ostream& operator<<(ostream& out, const Animal& a);
+
+    //overload operator>>
+    friend istream& operator>>(istream& in, Animal& a);
+
+
+    // destructor
+    ~Animal();
+
+    //function
+    void verificaObezitate();
+
+
+};
+
+int Animal::numarAnimale = 0;
+
+// constructors
+Animal::Animal() : idAnimal(numarAnimale)
+{
+    cout << "Constructor de initializare: " << endl;
+    this->nume = "Anonim";
+    this->sex = '-';
+    this->esteCumparat = false;
+    this->varsta = 0;
+    this->areProblemeSpeciale = false;
+    this->greutate = 0;
+    this->pret = 0;
+    numarAnimale++;
+}
+
+Animal::Animal(string nume, float pret) : idAnimal(numarAnimale)
+{
+    cout << "Constructor pentru clasa Animal cu 2 parametrii: " << endl;
+    this->nume = nume;
+    this->pret = pret;
+    numarAnimale++;
+}
+
+Animal::Animal(string nume, int varsta, float greutate) : idAnimal(numarAnimale)
+{
+    cout << "Constructor pentru clasa Animal cu 3 parametrii: " << endl;
+    this->nume = nume;
+    this->varsta = varsta;
+    this->greutate = greutate;
+    numarAnimale++;
+}
+
+Animal::Animal(string nume, bool esteCumparat, bool areProblemeSpeciale, float pret) : idAnimal(numarAnimale)
+{
+    cout << "Constructor pentru clasa Animal cu 4 parametrii: " << endl;
+    this->nume = nume;
+    this->esteCumparat = esteCumparat;
+    this->areProblemeSpeciale = areProblemeSpeciale;
+    this->pret = pret;
+    numarAnimale++;
+}
+
+Animal::Animal(string nume, char sex, bool esteCumparat, int varsta, bool areProblemeSpeciale, float greutate, float pret) : idAnimal(numarAnimale)
+{
+    cout << "Constructor pentru clasa Animal cu 7 parametrii: " << endl;
+    this->nume = nume;
+    this->sex = sex;
+    this->esteCumparat = esteCumparat;
+    this->varsta = varsta;
+    this->areProblemeSpeciale = areProblemeSpeciale;
+    this->greutate = greutate;
+    this->pret = pret;
+    numarAnimale++;
+}
+
+// copy constructor
+Animal::Animal(const Animal& other) : idAnimal(other.idAnimal)
+{
+    this->nume = other.nume;
+    this->sex = other.sex;
+    this->esteCumparat = other.esteCumparat;
+    this->varsta = other.varsta;
+    this->areProblemeSpeciale = other.areProblemeSpeciale;
+    this->greutate = other.greutate;
+    this->pret = other.pret;
+}
+
+// overload operator=
+Animal& Animal::operator=(const Animal& other)
+{
+    if (this != &other)
+    {
+        this->nume = other.nume;
+        this->sex = other.sex;
+        this->esteCumparat = other.esteCumparat;
+        this->varsta = other.varsta;
+        this->areProblemeSpeciale = other.areProblemeSpeciale;
+        this->greutate = other.greutate;
+        this->pret = other.pret;
+    }
+    return *this;
+}
+
+// overload operator<<
+ostream& operator<<(ostream& out, const Animal& a)
+{
+    out << "\nNume: " << a.nume;
+    out << "\nSex: " << a.sex;
+    out << "\nEste cumparat: " << a.esteCumparat;
+    out << "\nVarsta: " << a.varsta;
+    out << "\nAre probleme speciale: " << a.areProblemeSpeciale;
+    out << "\nGreutate: " << a.greutate;
+    out << "\nPret: " << a.pret << endl;
+    return out;
+}
+
+// overload operator>>
+istream& operator>>(istream& in, Animal& a)
+{
+    cout << "\nNume: ";
+    in >> a.nume;
+    cout << "\nSex: ";
+    in >> a.sex;
+    cout << "\nEste cumparat: ";
+    in >> a.esteCumparat;
+    cout << "\nVarsta: ";
+    in >> a.varsta;
+    cout << "\nAre probleme speciale: ";
+    in >> a.areProblemeSpeciale;
+    cout << "\nGreutate: ";
+    in >> a.greutate;
+    cout << "\nPret: ";
+    in >> a.pret;
+    return in;
+}
+
+// destructor
+Animal::~Animal()
+{
+    cout << "\nDistruge animalul: ";
+    cout << this->nume << endl;
+}
+
+//function 
+void Animal::verificaObezitate()
+{
+    int criteriuObezitate;
+    if (this->varsta < 2)
+        criteriuObezitate = 7;
+    else
+    {
+        if (this->varsta >= 2 && this->varsta <= 10)
+            criteriuObezitate = 12;
+        else
+            criteriuObezitate = 10;
+    }
+
+    if (this->greutate >= criteriuObezitate)
+        this->areProblemeSpeciale = true;
+}
+class Client //daca are rating mic varsta inaintata si experienta mica cu animale e o variabila in care zic nu (nu are voie sa adopte/cumpere)
              //in functie de niste factori(rating) sa avem discount pentru 
 {
 private:
@@ -57,6 +256,9 @@ public:
     
     //destructor
     ~Client();
+
+    //function
+    bool poateAdoptaAnimal(Animal a);
 };
 
 int Client::numarClienti = 0;
@@ -184,195 +386,26 @@ istream& operator>>(istream& in, Client& c)
 Client::~Client()
 {
     cout << "\nDistruge clientul: " ;
-    cout << this->numePrenume ;
+    cout << this->numePrenume<<endl ;
     delete this->varsta;
     delete this->sex;
 }
 
-class Animal // functionalitate: o functie care sa verifice daca animalul e overweight si daca e, sa se modifice areprblemespeciale din False in True daca e cazul 
-{
-private:
-    string nume;
-    char sex; // M sau F
-    bool esteCumparat;
-    int varsta;
-    bool areProblemeSpeciale; // 0: nu are probleme; 1: are probleme
-    float greutate;
-    float pret;
-    static int numarAnimale;
-    const int idAnimal;
+//function
+bool Client::poateAdoptaAnimal(Animal a)
+{//daca are rating mic varsta inaintata si experienta mica cu animale e o variabila in care zic nu (nu are voie sa adopte/cumpere)
+    bool poateAdopta = true;
+    //daca are rating mic si numar mare de animale, nu are voie 
+    if (this->rating <= 2.5 && this->animaleDetinute >= 5)
+        poateAdopta = false;
+    else
+        if (*this->varsta >= 60 && a.getAreProblemeSpeciale())
+            poateAdopta = false;
 
-public:
-    // setters
-    void setNume(string nume) { this->nume = nume; }
-    void setSex(char sex) { this->sex = sex; }
-    void setEsteCumparat(bool esteCumparat) { this->esteCumparat = esteCumparat; }
-    void setVarsta(int varsta) { this->varsta = varsta; }
-    void setAreProblemeSpeciale(bool areProblemeSpeciale) { this->areProblemeSpeciale = areProblemeSpeciale; }
-    void setGreutate(float greutate) { this->greutate = greutate; }
-    void setPret(float pret) { this->pret = pret; }
-    //static void setNumarAnimale(int numarAnimaleNou) { numarAnimale = numarAnimaleNou; }
+    return poateAdopta;
 
-    // getters
-    string getNume() { return this->nume; }
-    char getSex() { return this->sex; }
-    bool getEsteCumparat() { return this->esteCumparat; }
-    int getVarsta() { return this->varsta; }
-    bool getAreProblemeSpeciale() { return this->areProblemeSpeciale; }
-    float getGreutate() { return this->greutate; }
-    float getPret() { return this->pret; }
-    static int getNumarAnimale() { return numarAnimale; }
-    const int getIdAnimal() { return idAnimal; }
-
-    // constructors
-    Animal();
-    Animal(string nume, float pret);
-    Animal(string nume, int varsta, float greutate);
-    Animal(string nume, bool esteCumparat, bool areProblemeSpeciale, float pret);
-    Animal(string nume, char sex, bool eesteCumparat, int varsta, bool areProblemeSpeciale, float greutate, float pret);
-
-    //copy constructor
-    Animal(const Animal& other);
-
-    // overload operator=
-    Animal& operator=(const Animal& other);
-
-    // overload operator<<
-    friend ostream& operator<<(ostream& out, const Animal& a);
-
-    //overload operator>>
-    friend istream& operator>>(istream& in, Animal& a);
-
-
-    // destructor
-    ~Animal();
-
-    
-};
-
-int Animal::numarAnimale = 0;
-
-// constructors
-Animal::Animal() : idAnimal(numarAnimale) 
-{
-    cout << "Constructor de initializare: " << endl;
-    this->nume = "Anonim";
-    this->sex = '-';
-    this->esteCumparat = false;
-    this->varsta = 0;
-    this->areProblemeSpeciale = false;
-    this->greutate = 0;
-    this->pret = 0;
-    numarAnimale++;
 }
 
-Animal::Animal(string nume, float pret) : idAnimal(numarAnimale)
-{
-    cout << "Constructor pentru clasa Animal cu 2 parametrii: " << endl;
-    this->nume = nume;
-    this->pret = pret;
-    numarAnimale++;
-}
-
-Animal::Animal(string nume, int varsta, float greutate) : idAnimal(numarAnimale)
-{
-    cout << "Constructor pentru clasa Animal cu 3 parametrii: " << endl;
-    this->nume = nume;
-    this->varsta = varsta;
-    this->greutate = greutate;
-    numarAnimale++;
-}
-
-Animal::Animal(string nume, bool esteCumparat, bool areProblemeSpeciale, float pret) : idAnimal(numarAnimale)
-{
-    cout << "Constructor pentru clasa Animal cu 4 parametrii: " << endl;
-    this->nume = nume;
-    this->esteCumparat = esteCumparat;
-    this->areProblemeSpeciale = areProblemeSpeciale;
-    this->pret = pret;
-    numarAnimale++;
-}
-
-Animal::Animal(string nume, char sex, bool esteCumparat, int varsta, bool areProblemeSpeciale, float greutate, float pret) : idAnimal(numarAnimale)
-{
-    cout << "Constructor pentru clasa Animal cu 7 parametrii: " << endl;
-    this->nume = nume;
-    this->sex = sex;
-    this->esteCumparat = esteCumparat;
-    this->varsta = varsta;
-    this->areProblemeSpeciale = areProblemeSpeciale;
-    this->greutate = greutate;
-    this->pret = pret;
-    numarAnimale++;
-}
-
-// copy constructor
-Animal::Animal(const Animal& other) : idAnimal(other.idAnimal)
-{
-    this->nume = other.nume;
-    this->sex = other.sex;
-    this->esteCumparat = other.esteCumparat;
-    this->varsta = other.varsta;
-    this->areProblemeSpeciale = other.areProblemeSpeciale;
-    this->greutate = other.greutate;
-    this->pret = other.pret;
-}
-
-// overload operator=
-Animal& Animal::operator=(const Animal& other)
-{
-    if (this != &other)
-    {
-        this->nume = other.nume;
-        this->sex = other.sex;
-        this->esteCumparat = other.esteCumparat;
-        this->varsta = other.varsta;
-        this->areProblemeSpeciale = other.areProblemeSpeciale;
-        this->greutate = other.greutate;
-        this->pret = other.pret;
-    }
-    return *this;
-}
-
-// overload operator<<
-ostream& operator<<(ostream& out, const Animal& a)
-{
-    out << "\nNume: " << a.nume;
-    out << "\nSex: " << a.sex;
-    out << "\nEste cumparat: " << a.esteCumparat;
-    out << "\nVarsta: " << a.varsta;
-    out << "\nAre probleme speciale: " << a.areProblemeSpeciale;
-    out << "\nGreutate: " << a.greutate;
-    out << "\nPret: " << a.pret << endl;
-    return out;
-}
-
-// overload operator>>
-istream& operator>>(istream& in,  Animal& a)
-{
-    cout << "\nNume: ";
-    in >> a.nume;
-    cout << "\nSex: ";
-    in >> a.sex;
-    cout << "\nEste cumparat: ";
-    in >> a.esteCumparat;
-    cout << "\nVarsta: ";
-    in >> a.varsta;
-    cout << "\nAre probleme speciale: ";
-    in >> a.areProblemeSpeciale;
-    cout << "\nGreutate: ";
-    in >> a.greutate;
-    cout << "\nPret: ";
-    in >> a.pret;
-    return in;
-}
-
-// destructor
-Animal::~Animal()
-{
-    cout << "\nDistruge animalul: ";;
-    cout << this->nume ;
-}
 
 class Hrana
 {
@@ -420,6 +453,8 @@ public:
     // destructor 
     ~Hrana();
 
+    // function 
+    int calculeazaGrameHrana(Animal a);
 };
 
 // constructors
@@ -509,7 +544,86 @@ istream& operator>>(istream& in, Hrana& h)
 Hrana::~Hrana()
 {
     cout << "\nDistruge hrana: ";
-    cout << this->nume;
+    cout << this->nume << endl;
+}
+
+// function
+int Hrana::calculeazaGrameHrana(Animal a)
+{
+    int grameHranaUmedaPisica = 85;
+    int grameHranaUmedaCaine = 100;
+    int grameHranaUscataPisica = 1;
+    int grameHranaUscataCaine = 1;
+
+    if (this->esteUmeda == true)
+    {
+        if (this->tipAnimal == "pisica")
+        {
+            if (a.getGreutate() >= 2 && a.getGreutate() <= 3)
+                grameHranaUmedaPisica = grameHranaUmedaPisica * 2;
+            else
+                if (a.getGreutate() == 4)
+                    grameHranaUmedaPisica = grameHranaUmedaPisica * 3;
+                else
+                    if (a.getGreutate() >= 5)
+                        grameHranaUmedaPisica = grameHranaUmedaPisica * 4;
+        }
+        else
+            if (this->tipAnimal == "caine")
+            {
+                if (a.getGreutate() >= 3 && a.getGreutate() <= 6)
+                    grameHranaUmedaCaine = grameHranaUmedaCaine * 4;
+                else
+                    if (a.getGreutate() >= 6 && a.getGreutate() <= 10)
+                        grameHranaUmedaCaine = grameHranaUmedaCaine * 7;
+                    else
+                        if (a.getGreutate() >= 10 && a.getGreutate() <=20)
+                            grameHranaUmedaCaine = grameHranaUmedaCaine * 11;
+            }
+    }
+    else
+        if (this->esteUmeda == false)
+        {
+            if (this->tipAnimal == "pisica")
+            {
+                if (a.getGreutate() >= 2 && a.getGreutate() <= 3)
+                    grameHranaUscataPisica = grameHranaUscataPisica * 45;
+                else
+                    if (a.getGreutate() == 4)
+                        grameHranaUscataPisica = grameHranaUscataPisica * 55;
+                    else
+                        if (a.getGreutate() >= 5)
+                            grameHranaUscataPisica = grameHranaUscataPisica * 65;
+            }
+        }
+        else
+            if (this->tipAnimal == "caine")
+            {
+                if (a.getGreutate() >= 3 && a.getGreutate() <= 6)
+                    grameHranaUscataCaine = grameHranaUscataCaine * 85;
+                else
+                    if (a.getGreutate() >= 6 && a.getGreutate() <= 10)
+                        grameHranaUscataCaine = grameHranaUscataCaine * 140;
+                    else
+                        if (a.getGreutate() >= 10 && a.getGreutate() <= 20)
+                            grameHranaUscataCaine = grameHranaUscataCaine * 240;
+            }
+    if (this->tipAnimal == "pisica")
+    {
+        if (this->esteUmeda == true)
+            return grameHranaUmedaPisica;
+        else
+            return grameHranaUscataPisica;
+    }
+    else
+        if (this->tipAnimal == "caine")
+        {
+            if (this->esteUmeda == true)
+                return grameHranaUmedaCaine;
+            else
+                return grameHranaUscataCaine;
+        }
+    
 }
 
 class Hainuta
@@ -517,6 +631,7 @@ class Hainuta
 private:
     string denumire;
     char marime;
+    string tipAnimal;
     double pret;
     string culoare;
 
@@ -524,20 +639,22 @@ public:
     // setters
     void setDenumire(string denumire) { this->denumire = denumire; }
     void setMarime(char marime) { this->marime = marime; }
+    void setTipAnimal(string tipAnimal) { this->tipAnimal = tipAnimal; }
     void setPret(double pret) { this->pret = pret; }
     void setCuloare(string culoare) { this->culoare = culoare; }
 
     // getters
     string getDenumire() { return this->denumire; }
     char getMarime() { return this->marime; }
+    string getTipAnimal() { return this->tipAnimal; }
     double getPret() { return this->pret; }
     string getCuloare() { return this->culoare; }
 
     // constructors 
     Hainuta();
-    Hainuta(string denumire, char marime);
-    Hainuta(string denumire, char marime, double pret);
-    Hainuta(string denumire, char marime, double pret, string culoare);
+    Hainuta(string denumire, char marime, string tipAnimal);
+    Hainuta(string denumire, char marime, string tipAnimal, double pret);
+    Hainuta(string denumire, char marime, string tipAnimal, double pret, string culoare);
 
     // copy constructor
     Hainuta(const Hainuta& other);
@@ -554,6 +671,9 @@ public:
     // destructor
     ~Hainuta();
 
+    // function
+    char aflaMarimeRecomandata(Animal a);
+
     
 };
 
@@ -562,27 +682,31 @@ Hainuta::Hainuta()
 {
     this->denumire = "Anonim";
     this->marime = '-';
+    this->tipAnimal = "Anonim";
     this->pret = 0;
     this->culoare = "Anonim";
 }
 
-Hainuta::Hainuta(string denumire, char marime)
+Hainuta::Hainuta(string denumire, char marime, string tipAnimal)
 {
     this->denumire = denumire;
     this->marime = marime;
+    this->tipAnimal = tipAnimal;
 }
 
-Hainuta::Hainuta(string denumire, char marime, double pret)
+Hainuta::Hainuta(string denumire, char marime, string tipAnimal, double pret)
 {
     this->denumire = denumire;
     this->marime = marime;
+    this->tipAnimal = tipAnimal;
     this->pret = pret;
 }
 
-Hainuta::Hainuta(string denumire, char marime, double pret, string culoare)
+Hainuta::Hainuta(string denumire, char marime, string tipAnimal, double pret, string culoare)
 {
     this->denumire = denumire;
     this->marime = marime;
+    this->tipAnimal = tipAnimal;
     this->pret = pret;
     this->culoare = culoare;
 }
@@ -592,6 +716,7 @@ Hainuta::Hainuta(const Hainuta& other)
 {
     this->denumire = other.denumire;
     this->marime = other.marime;
+    this->tipAnimal = other.tipAnimal;
     this->pret = other.pret;
     this->culoare = other.culoare;
 }
@@ -603,6 +728,7 @@ Hainuta& Hainuta:: operator=(const Hainuta& other)
     {
         this->denumire = other.denumire;
         this->marime = other.marime;
+        this->tipAnimal = other.tipAnimal;
         this->pret = other.pret;
         this->culoare = other.culoare;
     }
@@ -614,6 +740,7 @@ ostream& operator<<(ostream& out, Hainuta& h)
 {
     out << "\nDenumire: " << h.denumire;
     out << "\nMarime: " << h.marime;
+    out << "\nTip animal: " << h.tipAnimal;
     out << "\nPret: " << h.pret;
     out << "\nCuloare: " << h.culoare;
     return out;
@@ -625,6 +752,8 @@ istream& operator>>(istream& in, Hainuta& h)
     in >> h.denumire;
     cout << "\nMarime: ";
     in >> h.marime;
+    cout << "\nTip animal: ";
+    in >> h.tipAnimal;
     cout << "\nPret: ";
     in >> h.pret;
     cout << "\nCuloare: ";
@@ -637,16 +766,59 @@ istream& operator>>(istream& in, Hainuta& h)
 Hainuta::~Hainuta()
 {
     cout << "\nDistruge Hainuta : " ;
-    cout << this->denumire << " " << this->marime ;
+    cout << this->denumire << " " << this->marime << endl ;
+}
+
+// function
+char Hainuta::aflaMarimeRecomandata(Animal a)
+{
+    char marimeRecomandataPisica = '-';
+    char marimeRecomandataCaine = '-';
+
+    if (this->tipAnimal == "pisica")
+    {
+        if (a.getGreutate() >= 2 && a.getGreutate() <= 3)
+            marimeRecomandataPisica = 'S';
+        else
+            if (a.getGreutate() == 4)
+                marimeRecomandataPisica = 'M';
+            else
+                if (a.getGreutate() >= 5)
+                    marimeRecomandataPisica = 'L';
+    }
+    else
+        if (this->tipAnimal == "caine")
+        {
+            if (a.getGreutate() >= 3 && a.getGreutate() <= 6)
+                marimeRecomandataCaine = 'S';
+            else
+                if (a.getGreutate() >= 6 && a.getGreutate() <= 10)
+                    marimeRecomandataCaine = 'M';
+                else
+                    if (a.getGreutate() >= 10 && a.getGreutate() <= 20)
+                        marimeRecomandataCaine = 'L';
+        }
+    if (this->tipAnimal == "pisica")
+        return marimeRecomandataPisica;
+    else
+        return marimeRecomandataCaine;
+
 }
 
 
 int main()
 {
-    Animal a1("piscot",2,2.8), a2("lusi",344), a3;
-    Animal a4 = a1;
-    cout << a2.getIdAnimal()<<endl;
-    cout << a4.getIdAnimal();
+    Animal a1("piscot",18,18);
+    Client c1("Bianca",30,2.4,1);
+    Hainuta h1("Onesie", 'M',"caine",20);
+    cout << " Recomandam marimea " << h1.aflaMarimeRecomandata(a1) << endl;
+
+    a1.setAreProblemeSpeciale(false);
+    //a1.verificaObezitate();
+    //cout << "Are probleme speciale: " << a1.getAreProblemeSpeciale();
+    //cout << endl;
+    cout<<"Poate adopta: "<< c1.poateAdoptaAnimal(a1);
+    cout << endl;
     /*cin >> a1;
     cout << a1 << endl; 
     Client c1;
