@@ -42,7 +42,7 @@ public:
     Animal();
     Animal(string nume, float pret);
     Animal(string nume, int varsta, float greutate);
-    Animal(string nume, bool esteCumparat, bool areProblemeSpeciale, float pret);
+    Animal(string nume, int varsta, float greutate, float pret);
     Animal(string nume, char sex, bool eesteCumparat, int varsta, bool areProblemeSpeciale, float greutate, float pret);
 
     //copy constructor
@@ -57,6 +57,14 @@ public:
     //overload operator>>
     friend istream& operator>>(istream& in, Animal& a);
 
+    // overload operator==
+    bool operator==(const Animal& an);
+
+    // overload operator<
+    bool operator<(const Animal& an);
+
+    //overload operator+
+    friend Animal operator+(Animal, Animal);
 
     // destructor
     ~Animal();
@@ -72,7 +80,7 @@ int Animal::numarAnimale = 0;
 // constructors
 Animal::Animal() : idAnimal(numarAnimale)
 {
-    cout << "Constructor de initializare: " << endl;
+    cout << "\nConstructor de initializare pentru casa Animal: " << endl;
     this->nume = "Anonim";
     this->sex = '-';
     this->esteCumparat = false;
@@ -85,7 +93,7 @@ Animal::Animal() : idAnimal(numarAnimale)
 
 Animal::Animal(string nume, float pret) : idAnimal(numarAnimale)
 {
-    cout << "Constructor pentru clasa Animal cu 2 parametrii: " << endl;
+    cout << "\nConstructor pentru clasa Animal cu 2 parametrii: " << endl;
     this->nume = nume;
     this->pret = pret;
     numarAnimale++;
@@ -93,26 +101,26 @@ Animal::Animal(string nume, float pret) : idAnimal(numarAnimale)
 
 Animal::Animal(string nume, int varsta, float greutate) : idAnimal(numarAnimale)
 {
-    cout << "Constructor pentru clasa Animal cu 3 parametrii: " << endl;
+    cout << "\nConstructor pentru clasa Animal cu 3 parametrii: " << endl;
     this->nume = nume;
     this->varsta = varsta;
     this->greutate = greutate;
     numarAnimale++;
 }
 
-Animal::Animal(string nume, bool esteCumparat, bool areProblemeSpeciale, float pret) : idAnimal(numarAnimale)
+Animal::Animal(string nume, int varsta, float greutate, float pret) : idAnimal(numarAnimale)
 {
-    cout << "Constructor pentru clasa Animal cu 4 parametrii: " << endl;
+    cout << "\nConstructor pentru clasa Animal cu 4 parametrii: " << endl;
     this->nume = nume;
-    this->esteCumparat = esteCumparat;
-    this->areProblemeSpeciale = areProblemeSpeciale;
+    this->varsta = varsta;
+    this->greutate = greutate;
     this->pret = pret;
     numarAnimale++;
 }
 
 Animal::Animal(string nume, char sex, bool esteCumparat, int varsta, bool areProblemeSpeciale, float greutate, float pret) : idAnimal(numarAnimale)
 {
-    cout << "Constructor pentru clasa Animal cu 7 parametrii: " << endl;
+    cout << "\nConstructor pentru clasa Animal cu 7 parametrii: " << endl;
     this->nume = nume;
     this->sex = sex;
     this->esteCumparat = esteCumparat;
@@ -184,6 +192,32 @@ istream& operator>>(istream& in, Animal& a)
     return in;
 }
 
+// overload operator==
+bool Animal::operator==(const Animal& an)
+{
+    if (this->nume == an.nume && this->sex == an.sex && this->esteCumparat == an.esteCumparat && this->varsta == an.varsta && this->areProblemeSpeciale == an.areProblemeSpeciale && this->greutate == an.greutate && this->pret == an.pret)
+        return true;
+    return false;
+}
+
+bool Animal::operator<(const Animal& an)
+{
+    if ( (this->varsta < an.varsta) && (this->greutate < an.greutate) )
+        return true;
+    return false;
+}
+
+// overoad operator+
+Animal operator+(Animal ob1, Animal ob2)
+{
+    Animal rez;
+    rez.nume = ob1.nume + ob2.nume;
+    rez.varsta = ob1.varsta + ob2.varsta;
+    rez.greutate = ob1.greutate + ob2.greutate;
+    rez.pret = ob1.pret + ob2.pret;
+    return rez;
+}
+
 // destructor
 Animal::~Animal()
 {
@@ -212,23 +246,36 @@ class Client //daca are rating mic varsta inaintata si experienta mica cu animal
              //in functie de niste factori(rating) sa avem discount pentru 
 {
 private:
-    string numePrenume;
-    int* varsta;
-    char* sex;     // M sau F
+    string nume;
+    string prenume;
+    int *varsta;
+    char *sex;     // M sau F
     double rating; // intre 0 si 5
     int animaleDetinute;
     static int numarClienti;
 
 public:
     //setters and getters
-    void setNumePrenume(string numePrenume) { this->numePrenume = numePrenume; }
-    void setVarsta(int* varsta) { this->varsta = varsta; }
-    void setSex(char* sex) { this->sex = sex; }
+    void setNume(string nume) { this->nume = nume; }
+    void setPrenume(string prenume) { this->prenume = prenume; }
+    void setVarsta(int *varsta)
+    { 
+        if (this->varsta != NULL)
+            delete this->varsta;
+        this->varsta = new int(*varsta);
+    }
+    void setSex(char *sex) 
+    { 
+        if (this->sex != NULL)
+            delete this->sex;
+        this->sex = new char(*sex);
+    }
     void setRating(double rating) { this->rating = rating; }
     void setAnimaleDetinute(int animaleDetinute) { this->animaleDetinute = animaleDetinute; }
     static void setNumarClienti(int numarClientiNou) { numarClienti = numarClientiNou; }
 
-    string getNumePrenume() { return this->numePrenume; }
+    string getNume() { return this->nume; }
+    string getPrenume() { return this->prenume; }
     int* getVarsta() { return this->varsta; }
     char* getSex() { return this->sex; }
     double getRating() { return this->rating; }
@@ -237,10 +284,10 @@ public:
 
     //constructors
     Client();
-    Client(string numePrenume, int varsta);
-    Client(string numePrenume, double rating, int animaleDetinute);
-    Client(string numePrenume, int varsta, double rating, int animaleDetinute);
-    Client(string numePrenume, int varsta, char sex, double rating, int animaleDetinute);
+    Client(string nume, string prenume, int *varsta);
+    Client(string nume, string prenume, double rating, int animaleDetinute);
+    Client(string nume, string prenume, int *varsta, double rating, int animaleDetinute);
+    Client(string nume, string prenume, int *varsta, char *sex, double rating, int animaleDetinute);
 
     // copy constructor
     Client(const Client& other);
@@ -253,6 +300,15 @@ public:
     
     // overload operator>>
     friend istream& operator>>(istream& in, Client& c);
+
+    // overload operator==
+    bool operator==(const Client& cl);
+
+    //overload operator<
+    bool operator<(const Client& cl);
+
+    // overload oprator+
+    friend Client operator+(Client, Client);
     
     //destructor
     ~Client();
@@ -266,66 +322,77 @@ int Client::numarClienti = 0;
 // constructors
 Client::Client()
 {
-    cout << "Constructor de initializare: " << endl;
-    this->numePrenume = "Anonim";
+    cout << "Constructor de initializare pentru clasa Client: " << endl;
+    this->nume = "Anonim";
+    this->prenume = "Anonim";
     this->varsta = new int(0);
     this->sex = new char('-');
     this->rating = 0;
     this->animaleDetinute = 0;
     numarClienti++;
-    cout << this->numePrenume << " cu varsta de " << *this->varsta << " ani si sexul " << *this->sex << ", are ratingul de " << this->rating << " puncte si a detinut " << this->animaleDetinute << " animale. " << endl;
+    cout << this->nume << " " << this->prenume << " cu varsta de " << *this->varsta << " ani si sexul " << this->sex << ", are ratingul de " << this->rating << " puncte si a detinut " << this->animaleDetinute << " animale. " << endl;
 }
 
-Client::Client(string numePrenume, int varsta)
+Client::Client(string nume, string prenume, int *varsta)
 {
-    cout << "Constructor pentru clasa Client cu 2 parametrii: " << endl;
-    this->numePrenume = numePrenume;
-    this->varsta = new int(varsta); // creaza un pointer cu valoarea din v
+    //cout << "Constructor pentru clasa Client cu 3 parametrii: " << endl;
+    this->nume = nume;
+    this->prenume = prenume;
+    this->varsta = new int(*varsta); // creaza un pointer cu valoarea din v
+
     numarClienti++;
-    cout << this->numePrenume << " cu varsta de " << *this->varsta << " ani. " << endl;
+    //cout << this->nume << " " << this->prenume << " cu varsta de " << *this->varsta << " ani. " << endl;
 }
 
-Client::Client(string numePrenume, double rating, int animaleDetinute)
+Client::Client(string nume, string prenume, double rating, int animaleDetinute)
 {
-    cout << "Constructor pentru clasa Client cu 3 parametrii: " << endl;
-    this->numePrenume = numePrenume;
+    //cout << "Constructor pentru clasa Client cu 4 parametrii: " << endl;
+
+    this->nume = nume;
+    this->prenume = prenume;
     this->rating = rating;
     this->animaleDetinute = animaleDetinute;
     numarClienti++;
-    cout << this->numePrenume << " are ratingul de " << this->rating << " puncte si a detinut " << this->animaleDetinute << " animale. " << endl;
+    //cout << this->nume << " " << this->prenume << " are ratingul de " << this->rating << " puncte si a detinut " << this->animaleDetinute << " animale. " << endl;
 }
 
-Client::Client(string numePrenume, int varsta, double rating, int animaleDetinute)
+Client::Client(string nume, string prenume, int *varsta, double rating, int animaleDetinute)
 {
-    cout << "Constructor pentru clasa Client cu 4 parametrii: " << endl;
-    this->numePrenume = numePrenume;
-    this->varsta = new int(varsta);
+    //cout << "Constructor pentru clasa Client cu 4 parametrii: " << endl;
+    this->nume = nume;
+    this->prenume = prenume;
+    this->varsta = new int(*varsta);
     this->rating = rating;
     this->animaleDetinute = animaleDetinute;
     numarClienti++;
-    cout << this->numePrenume << " cu varsta de " << *this->varsta << " ani, are ratingul de " << this->rating << " puncte si a detinut " << this->animaleDetinute << " animale. " << endl;
+    //cout << this->nume << " " << this->prenume << " cu varsta de " << *this->varsta << " ani, are ratingul de " << this->rating << " puncte si a detinut " << this->animaleDetinute << " animale. " << endl;
 }
 
-Client::Client(string numePrenume, int varsta, char sex, double rating, int animaleDetinute)
+Client::Client(string nume, string prenume, int *varsta, char *sex, double rating, int animaleDetinute)
 {
-    cout << "Constructor pentru clasa Client cu 5 parametrii: " << endl;
-    this->numePrenume = numePrenume;
-    this->varsta = new int(varsta);
-    this->sex = new char(sex);
+    //cout << "Constructor pentru clasa Client cu 5 parametrii: " << endl;
+
+    this->nume = nume;
+    this->prenume = prenume;
+    this->varsta = new int(*varsta);
+    this->sex = new char(*sex);
     this->rating = rating;
     this->animaleDetinute = animaleDetinute;
     numarClienti++;
-    cout << this->numePrenume << " cu varsta de " << *this->varsta << " ani si sexul " << *this->sex << ", are ratingul de " << this->rating << " puncte si a detinut " << this->animaleDetinute << " animale. " << endl;
+    //cout << this->nume << " " << this->prenume << " cu varsta de " << *this->varsta << " ani si sexul " << this->sex << ", are ratingul de " << this->rating << " puncte si a detinut " << this->animaleDetinute << " animale. " << endl;
 }
 
 //copy constructor
 Client::Client(const Client& other)
 {
-    this->numePrenume = other.numePrenume;
+    this->nume = other.nume;
+    this->prenume = other.prenume;
+
     if (other.varsta != NULL)
         this->varsta = new int(*other.varsta);
     else
         this->varsta = new int();
+  
     if (other.sex != NULL)
         this->sex = new char(*other.sex);
     else
@@ -342,10 +409,12 @@ Client& Client::operator=(const Client& other)
     {
         if (this->varsta != NULL)
             delete this->varsta;
+        
         if (this->sex != NULL)
             delete this->sex;
 
-        this->numePrenume = other.numePrenume;
+        this->nume = other.nume;
+        this->prenume = other.prenume;
         this->varsta = new int(*other.varsta);
         this->sex = new char(*other.sex);
         this->rating = other.rating;
@@ -358,7 +427,8 @@ Client& Client::operator=(const Client& other)
 // overload operator<<
 ostream& operator<<(ostream& out, const Client& c)
 {
-    out << "\nNume Prenume: " << c.numePrenume;
+    out << "\nNume: " << c.nume;
+    out << "\nPrenume: " << c.prenume;
     out << "\nVarsta: " << *c.varsta;
     out << "\nSex: " << *c.sex;
     out << "\nRating: " << c.rating;
@@ -369,12 +439,25 @@ ostream& operator<<(ostream& out, const Client& c)
 // overload operator>>
 istream& operator>>(istream& in, Client& c)
 {
-    cout << "\nNume Prenume: ";
-    in >> c.numePrenume;
+    cout << "\nNume: ";
+    in >> c.nume;
+    cout << "\nPrenume: ";
+    in >> c.prenume;
+
     cout << "\nVarsta: ";
-    in >> *c.varsta;
+    int v;
+    in >> v;
+    if (c.varsta != NULL)
+        delete c.varsta;
+    c.varsta = new int(v);
+
     cout << "\nSex: ";
-    in >> *c.sex;
+    char s;
+    in >> s;
+    if (c.sex != NULL)
+        delete c.sex;
+    c.sex = new char(s);
+    
     cout << "\nRating: ";
     in >> c.rating;
     cout << "\nAnimale detinute: ";
@@ -382,13 +465,45 @@ istream& operator>>(istream& in, Client& c)
     return in;
 }
 
+//overload operator==
+bool Client::operator==(const Client& cl)
+{
+    if ( (this->nume == cl.nume) && (this->prenume == cl.prenume) && (*this->varsta == *cl.varsta) && (*this->sex == *cl.sex) && (this->rating == cl.rating) && (this->animaleDetinute == animaleDetinute) )
+        return true;
+    return false;
+}
+
+bool Client::operator<(const Client& cl)
+{
+    if ( (this->rating < cl.rating) && (this->animaleDetinute < cl.animaleDetinute) )
+        return true;
+    return false;
+}
+
+//overload operator+
+Client operator+(Client ob1, Client ob2)
+{
+    Client rez;
+    rez.nume = ob1.nume + ob2.nume;
+    rez.prenume = ob1.prenume + ob2.prenume;
+    rez.varsta = new int(*ob1.varsta + *ob2.varsta);
+    rez.rating = ob1.rating + ob2.rating;
+    rez.animaleDetinute = ob1.animaleDetinute + ob2.animaleDetinute;
+    return rez;
+}
+
 // destructor
 Client::~Client()
 {
     cout << "\nDistruge clientul: " ;
-    cout << this->numePrenume<<endl ;
-    delete this->varsta;
-    delete this->sex;
+    cout << this->nume << " " << this->prenume << endl;
+    
+    if(this->varsta != NULL)
+        delete this->varsta;
+
+    if (this->sex != NULL)
+        delete this->sex;
+    
 }
 
 //function
@@ -450,6 +565,15 @@ public:
     // overload operator>>
     friend istream& operator>>(istream& in, Hrana& h);
 
+    //overload operator==
+    bool operator==(const Hrana& hr);
+
+    // overload operator<
+    bool operator<(const Hrana& hr);
+
+    // overload operator+
+    friend Hrana operator+(Hrana, Hrana);
+
     // destructor 
     ~Hrana();
 
@@ -460,6 +584,7 @@ public:
 // constructors
 Hrana::Hrana()
 {
+    cout << "\nConstructor de initializare pentru clasa Hrana: " << endl;
     this->nume = "Anonim";
     this->pret = 0;
     this->tipAnimal = "Anonim";
@@ -540,12 +665,40 @@ istream& operator>>(istream& in, Hrana& h)
     return in;
 }
 
+// overload operator==
+bool Hrana::operator==(const Hrana& hr)
+{
+    if (this->nume == hr.nume && this->pret == hr.pret && this->tipAnimal == hr.tipAnimal && this->esteUmeda == hr.esteUmeda && this->valNutritiva == hr.valNutritiva)
+        return true;
+    return false;
+}
+
+//overload operator<
+bool Hrana::operator<(const Hrana& hr)
+{
+    if (this->pret < hr.pret)
+        return true;
+    return false;
+}
+
+// overload operator+
+Hrana operator+(Hrana ob1, Hrana ob2)
+{
+    Hrana rez;
+    rez.nume = ob1.nume + ob2.nume;
+    rez.pret = ob1.pret + ob2.pret;
+    return rez;
+
+}
+
 // destructor
 Hrana::~Hrana()
 {
     cout << "\nDistruge hrana: ";
     cout << this->nume << endl;
 }
+
+
 
 // function
 int Hrana::calculeazaGrameHrana(Animal a)
@@ -653,7 +806,7 @@ public:
     // constructors 
     Hainuta();
     Hainuta(string denumire, char marime, string tipAnimal);
-    Hainuta(string denumire, char marime, string tipAnimal, double pret);
+    Hainuta(string denumire, string tipAnimal, double pret);
     Hainuta(string denumire, char marime, string tipAnimal, double pret, string culoare);
 
     // copy constructor
@@ -667,6 +820,15 @@ public:
 
     //overload operator>>
     friend istream& operator>>(istream& in, Hainuta& h);
+
+    //overload operator==
+    bool operator==(const Hainuta& ha);
+
+    // overload operator<
+    bool operator<(const Hainuta& ha);
+
+    // overload operator+
+    friend Hainuta operator+(Hainuta, Hainuta);
 
     // destructor
     ~Hainuta();
@@ -694,10 +856,9 @@ Hainuta::Hainuta(string denumire, char marime, string tipAnimal)
     this->tipAnimal = tipAnimal;
 }
 
-Hainuta::Hainuta(string denumire, char marime, string tipAnimal, double pret)
+Hainuta::Hainuta(string denumire, string tipAnimal, double pret)
 {
     this->denumire = denumire;
-    this->marime = marime;
     this->tipAnimal = tipAnimal;
     this->pret = pret;
 }
@@ -762,6 +923,33 @@ istream& operator>>(istream& in, Hainuta& h)
     return in;
 }
 
+// overload operator==
+bool Hainuta::operator==(const Hainuta& ha)
+{
+    if (this->denumire == ha.denumire && this->marime == ha.marime && this->tipAnimal == ha.tipAnimal && this->pret == ha.pret && this->culoare == ha.culoare)
+        return true;
+    return false;
+}
+
+// overload operator<
+bool Hainuta::operator<(const Hainuta& ha)
+{
+    if (this->pret < ha.pret)
+        return true;
+    return false;
+}
+
+// overload operator+
+Hainuta operator+(Hainuta ob1, Hainuta ob2)
+{
+    Hainuta rez;
+    rez.denumire = ob1.denumire + ob2.denumire;
+    rez.tipAnimal = ob1.tipAnimal + ob2.tipAnimal;
+    rez.pret = ob1.pret + ob2.pret;
+    return rez;
+
+}
+
 // destructor 
 Hainuta::~Hainuta()
 {
@@ -808,17 +996,63 @@ char Hainuta::aflaMarimeRecomandata(Animal a)
 
 int main()
 {
-    Animal a1("piscot",18,18);
-    Client c1("Bianca",30,2.4,1);
-    Hainuta h1("Onesie", 'M',"caine",20);
-    cout << " Recomandam marimea " << h1.aflaMarimeRecomandata(a1) << endl;
+    Client c1("balasa","bianca", new int(20), 4.55, 1), c2("Cioinica","Petru", new int(22), 4, 4);
+    Client c3;
+    c3 = c1 + c2;
+    cout << c3;
 
-    a1.setAreProblemeSpeciale(false);
+    /*
+    Hrana hr1("BrtCare", 34.5);
+    Hrana hr2("Whiskas", 22.99);
+    Hrana hr3;
+    hr3 = hr1 + hr2;
+    cout << hr3;
+    */
+
+
+    /*
+    Animal a1("piscot", 1, 2.333, 3.444);
+    Animal a2("pisicescu", 2, 3.444, 6.55);
+    Animal a3;
+    a3 = a1 + a2;
+    cout << a3;
+    */
+
+    /*
+    Hainuta h1("pelerina", "pisica", 22.33);
+    Hainuta h2("salopeta", "Caine", 44.78);
+    Hainuta h3;
+    h3 = h1 + h2;
+    cout << h3;
+    */
+
+   /*
+    Animal a1("piscot", 'M', true, 1, false, 22.5, 233.3);
+    Animal a2("piscot", 'M', true, 1, false, 22.4, 233.3);
+    if (a1 == a2)
+        cout << "DA";
+    else
+        cout << "NU";
+    */
+
+
+    //Client c1;
+    //cin >> c1;
+    //Client c2 = c1;
+    //cout << c2;
+    
+    
+    //Client c3("bibi", "balasa", 20);
+    
+    //Hainuta h1("Onesie", 'M',"caine",20);
+    //cout << " Recomandam marimea " << h1.aflaMarimeRecomandata(a1) << endl;
+
+    //a1.setAreProblemeSpeciale(false);
     //a1.verificaObezitate();
     //cout << "Are probleme speciale: " << a1.getAreProblemeSpeciale();
     //cout << endl;
-    cout<<"Poate adopta: "<< c1.poateAdoptaAnimal(a1);
-    cout << endl;
+    //cout<<"Poate adopta: "<< c1.poateAdoptaAnimal(a1);
+    //cout << endl;
     /*cin >> a1;
     cout << a1 << endl; 
     Client c1;
