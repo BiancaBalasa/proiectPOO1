@@ -3,7 +3,7 @@
 
 using namespace std;
 
-class Animal // functionalitate: o functie care sa verifice daca animalul e overweight si daca e, sa se modifice areprblemespeciale din False in True daca e cazul 
+class Animal 
 {
 private:
     string nume;
@@ -25,7 +25,6 @@ public:
     void setAreProblemeSpeciale(bool areProblemeSpeciale) { this->areProblemeSpeciale = areProblemeSpeciale; }
     void setGreutate(float greutate) { this->greutate = greutate; }
     void setPret(float pret) { this->pret = pret; }
-    //static void setNumarAnimale(int numarAnimaleNou) { numarAnimale = numarAnimaleNou; }
 
     // getters
     string getNume() { return this->nume; }
@@ -80,7 +79,7 @@ int Animal::numarAnimale = 0;
 // constructors
 Animal::Animal() : idAnimal(numarAnimale)
 {
-    cout << "\nConstructor de initializare pentru casa Animal: " << endl;
+    //cout << "\nConstructor de initializare pentru casa Animal: " << endl;
     this->nume = "Anonim";
     this->sex = '-';
     this->esteCumparat = false;
@@ -93,7 +92,7 @@ Animal::Animal() : idAnimal(numarAnimale)
 
 Animal::Animal(string nume, float pret) : idAnimal(numarAnimale)
 {
-    cout << "\nConstructor pentru clasa Animal cu 2 parametrii: " << endl;
+    //cout << "\nConstructor pentru clasa Animal cu 2 parametrii: " << endl;
     this->nume = nume;
     this->pret = pret;
     numarAnimale++;
@@ -101,7 +100,7 @@ Animal::Animal(string nume, float pret) : idAnimal(numarAnimale)
 
 Animal::Animal(string nume, int varsta, float greutate) : idAnimal(numarAnimale)
 {
-    cout << "\nConstructor pentru clasa Animal cu 3 parametrii: " << endl;
+    //cout << "\nConstructor pentru clasa Animal cu 3 parametrii: " << endl;
     this->nume = nume;
     this->varsta = varsta;
     this->greutate = greutate;
@@ -110,7 +109,7 @@ Animal::Animal(string nume, int varsta, float greutate) : idAnimal(numarAnimale)
 
 Animal::Animal(string nume, int varsta, float greutate, float pret) : idAnimal(numarAnimale)
 {
-    cout << "\nConstructor pentru clasa Animal cu 4 parametrii: " << endl;
+    //cout << "\nConstructor pentru clasa Animal cu 4 parametrii: " << endl;
     this->nume = nume;
     this->varsta = varsta;
     this->greutate = greutate;
@@ -120,7 +119,7 @@ Animal::Animal(string nume, int varsta, float greutate, float pret) : idAnimal(n
 
 Animal::Animal(string nume, char sex, bool esteCumparat, int varsta, bool areProblemeSpeciale, float greutate, float pret) : idAnimal(numarAnimale)
 {
-    cout << "\nConstructor pentru clasa Animal cu 7 parametrii: " << endl;
+    //cout << "\nConstructor pentru clasa Animal cu 7 parametrii: " << endl;
     this->nume = nume;
     this->sex = sex;
     this->esteCumparat = esteCumparat;
@@ -225,7 +224,8 @@ Animal::~Animal()
     cout << this->nume << endl;
 }
 
-//function 
+//function :  verifica daca animalul este overweight in functie de varsta si greutate si daca este adevarat
+           // se modifice arePrblemeSpeciale din False in True (daca e cazul) 
 void Animal::verificaObezitate()
 {
     int criteriuObezitate;
@@ -242,8 +242,8 @@ void Animal::verificaObezitate()
     if (this->greutate >= criteriuObezitate)
         this->areProblemeSpeciale = true;
 }
-class Client //daca are rating mic varsta inaintata si experienta mica cu animale e o variabila in care zic nu (nu are voie sa adopte/cumpere)
-             //in functie de niste factori(rating) sa avem discount pentru 
+class Client 
+              
 {
 private:
     string nume;
@@ -322,7 +322,7 @@ int Client::numarClienti = 0;
 // constructors
 Client::Client()
 {
-    cout << "Constructor de initializare pentru clasa Client: " << endl;
+    // << "Constructor de initializare pentru clasa Client: " << endl;
     this->nume = "Anonim";
     this->prenume = "Anonim";
     this->varsta = new int(0);
@@ -330,7 +330,7 @@ Client::Client()
     this->rating = 0;
     this->animaleDetinute = 0;
     numarClienti++;
-    cout << this->nume << " " << this->prenume << " cu varsta de " << *this->varsta << " ani si sexul " << this->sex << ", are ratingul de " << this->rating << " puncte si a detinut " << this->animaleDetinute << " animale. " << endl;
+    //cout << this->nume << " " << this->prenume << " cu varsta de " << *this->varsta << " ani si sexul " << *this->sex << ", are ratingul de " << this->rating << " puncte si a detinut " << this->animaleDetinute << " animale. " << endl;
 }
 
 Client::Client(string nume, string prenume, int *varsta)
@@ -379,7 +379,7 @@ Client::Client(string nume, string prenume, int *varsta, char *sex, double ratin
     this->rating = rating;
     this->animaleDetinute = animaleDetinute;
     numarClienti++;
-    //cout << this->nume << " " << this->prenume << " cu varsta de " << *this->varsta << " ani si sexul " << this->sex << ", are ratingul de " << this->rating << " puncte si a detinut " << this->animaleDetinute << " animale. " << endl;
+    //cout << this->nume << " " << this->prenume << " cu varsta de " << *this->varsta << " ani si sexul " << *this->sex << ", are ratingul de " << this->rating << " puncte si a detinut " << this->animaleDetinute << " animale. " << endl;
 }
 
 //copy constructor
@@ -506,11 +506,13 @@ Client::~Client()
     
 }
 
-//function
+//function :  verifica daca se poate adopta un animal in functie de ratingul, varsta si experienta cu animalele 
+          //  pe care le are clientul si in functie de problemele speciale ale animalului
+        
 bool Client::poateAdoptaAnimal(Animal a)
-{//daca are rating mic varsta inaintata si experienta mica cu animale e o variabila in care zic nu (nu are voie sa adopte/cumpere)
+{
     bool poateAdopta = true;
-    //daca are rating mic si numar mare de animale, nu are voie 
+    
     if (this->rating <= 2.5 && this->animaleDetinute >= 5)
         poateAdopta = false;
     else
@@ -526,7 +528,6 @@ class Hrana
 {
 private:
     string nume;
-    const string distribuitor;
     float pret;
     string tipAnimal;
     bool esteUmeda;
@@ -584,7 +585,7 @@ public:
 // constructors
 Hrana::Hrana()
 {
-    cout << "\nConstructor de initializare pentru clasa Hrana: " << endl;
+    //cout << "\nConstructor de initializare pentru clasa Hrana: " << endl;
     this->nume = "Anonim";
     this->pret = 0;
     this->tipAnimal = "Anonim";
@@ -700,7 +701,8 @@ Hrana::~Hrana()
 
 
 
-// function
+// function : calculeaza in functie de tipul animalului: pisica/caine care este cantitatea de hrana umeda 
+           // si cantitatea de hrana uscata recomandata pentru animalut in functie de greutatea acestuia
 int Hrana::calculeazaGrameHrana(Animal a)
 {
     int grameHranaUmedaPisica = 85;
@@ -954,10 +956,11 @@ Hainuta operator+(Hainuta ob1, Hainuta ob2)
 Hainuta::~Hainuta()
 {
     cout << "\nDistruge Hainuta : " ;
-    cout << this->denumire << " " << this->marime << endl ;
+    cout << this->denumire << endl ;
 }
 
-// function
+// function : recomanda in functie de tipul animalului: pisica/caine care este marimea potrivita 
+           // pentru animalut in functie de greutatea acestuia
 char Hainuta::aflaMarimeRecomandata(Animal a)
 {
     char marimeRecomandataPisica = '-';
@@ -996,10 +999,340 @@ char Hainuta::aflaMarimeRecomandata(Animal a)
 
 int main()
 {
-    Client c1("balasa","bianca", new int(20), 4.55, 1), c2("Cioinica","Petru", new int(22), 4, 4);
+    Animal a;
+    Client c;
+    Hrana hr;
+    Hainuta h;
+
+    int input = -1;
+    while (input != 0)
+    {   
+        cout << "\nALEGETI OPTIUNEA: " << endl;
+        cout << "  0. Exit!\n";
+        cout << "  1. Creaza animal\n";
+        cout << "  2. Creaza client\n";
+        cout << "  3. Creaza hrana\n";
+        cout << "  4. Creaza hainuta\n";
+        cout << "  5. Afiseaza animal\n";
+        cout << "  6. Afiseaza client\n";
+        cout << "  7. Afiseaza hrana\n";
+        cout << "  8. Afiseaza hainuta\n";
+        cout << "  9. Editeaza animal\n";
+        cout << " 10. Editeaza client\n";
+        cout << " 11. Editeaza hrana\n";
+        cout << " 12. Editeaza hainuta\n";
+        cout << "Introduceti optiunea dorita: \n";
+            
+        
+        cin >> input;
+
+        switch (input)
+        {
+        case 0:
+            cout << "Iesire din program! " << endl;
+            break;
+
+        case 1:
+            cin >> a;
+            break;
+
+        case 2:
+            cin >> c;
+            break;
+
+        case 3:
+            cin >> hr;
+            break;
+
+        case 4:
+            cin >> h;
+            break;
+
+        case 5:
+            cout << a << endl;
+            break;
+
+        case 6:
+            cout << c << endl;
+            break;
+
+        case 7:
+            cout << hr << endl;
+            break;
+
+        case 8:
+            cout << h << endl;
+            break;
+
+        case 9:
+            cout << "Animalul are urmatoarele atribute:\n" << " 1. nume\n" << " 2. sex\n" 
+                 << " 3. esteCumparat\n" << " 4. varsta\n" << " 5. areProblemeSpeciale\n" 
+                 << " 6. greutate\n" << " 7. pret\n";
+            cout << "Ce doriti sa editati? Scrieti numarul corespunzator atributului dorit: \n";
+            int inputAnimal;
+            cin >> inputAnimal;
+            switch (inputAnimal)
+            {
+            case 1:
+            {
+                string n;
+                cin >> n;
+                a.setNume(n);
+                break;
+            }
+
+            case 2:
+            {
+                char s;
+                cin >> s;
+                a.setSex(s);
+                break;
+            }
+
+            case 3:
+            {
+                bool cump;
+                cin >> cump;
+                a.setEsteCumparat(cump);
+                break;
+            }
+
+            case 4:
+            {
+                int v;
+                cin >> v;
+                a.setVarsta(v);
+                break;
+            }
+
+            case 5:
+            {
+                bool ps;
+                cin >> ps;
+                a.setAreProblemeSpeciale(ps);
+                break;
+            }
+
+            case 6:
+            {
+                float g;
+                cin >> g;
+                a.setGreutate(g);
+                break;
+            }
+
+            case 7:
+            {
+                float p;
+                cin >> p;
+                a.setPret(p);
+                break;
+            }
+
+            default:
+                cout << "Nu corespunde niciunui atribut! \n";
+                break;
+            }
+            break;
+
+        case 10:
+            cout << "Clientul are urmatoarele atribute:\n" << " 1. nume\n" << " 2. prenume\n" << " 3. varsta\n"
+                 << " 4. sex\n" << " 5. rating\n" << " 6. animaleDetinute\n";
+            cout << "Ce doriti sa editati? Scrieti numarul corespunzator atributului dorit: \n";
+            int inputClient;
+            cin >> inputClient;
+            switch (inputClient)
+            {
+            case 1:
+            {
+                string n;
+                cin >> n;
+                c.setNume(n);
+                break;
+            }
+
+            case 2:
+            {
+                string p;
+                cin >> p;
+                c.setPrenume(p);
+                break;
+            }
+
+            case 3:
+            {
+                int v;
+                int* varstaNoua;
+                cin >> v;
+                varstaNoua = new int(v);
+                c.setVarsta(varstaNoua);
+                delete varstaNoua;
+                break;
+            }
+
+            case 4:
+            {
+                char s;
+                char* sexNou;
+                cin >> s;
+                sexNou = new char(s);
+                c.setSex(sexNou);
+                delete sexNou;
+                break;
+            }
+
+            case 5:
+            {
+                double r;
+                cin >> r;
+                c.setRating(r);
+                break;
+            }
+
+            case 6:
+            {
+                int ad;
+                cin >> ad;
+                c.setAnimaleDetinute(ad);
+                break;
+            }
+
+            default:
+                cout << "Nu corespunde niciunui atribut! \n";
+                break;
+            }
+            break;
+
+        case 11:
+            cout << "Hrana are urmatoarele atribute:\n" << " 1. nume\n" << " 2. pret\n" << " 3. tipAnimal\n"
+                 << " 4. esteUmeda\n" << " 5. valNutritiva\n";
+            cout << "Ce doriti sa editati? Scrieti numarul corespunzator atributului dorit: \n";
+            int inputHrana;
+            cin >> inputHrana;
+            switch (inputHrana)
+            {
+            case 1:
+            {
+                string n;
+                cin >> n;
+                hr.setNume(n);
+                break;
+            }
+
+            case 2:
+            {
+                float p;
+                cin >> p;
+                hr.setPret(p);
+                break;
+            }
+
+            case 3:
+            {
+                string tipAn;
+                cin >> tipAn;
+                hr.setTipAnimal(tipAn);
+                break;
+            }
+
+            case 4:
+            {
+                bool eUmeda;
+                cin >> eUmeda;
+                hr.setEsteUmeda(eUmeda);
+                break;
+            }
+
+            case 5:
+            {
+                int valNut;
+                cin >> valNut;
+                hr.setValNutritiva(valNut);
+                break;
+            }
+
+            default:
+                cout << "Nu corespunde niciunui atribut! \n";
+                break;
+            }
+            break;
+
+
+        case 12:
+            cout << "Hainuta are urmatoarele atribute:\n" << " 1. denumire\n" << " 2. marime\n" << " 3. tipAnimal\n"
+                 << " 4. pret\n" << " 5. culoare\n";
+            cout << "Ce doriti sa editati? Scrieti numarul corespunzator atributului dorit: \n";
+            int inputHainuta;
+            cin >> inputHainuta;
+            switch (inputHainuta)
+            {
+            case 1:
+            {
+                string den;
+                cin >> den;
+                h.setDenumire(den);
+                break;
+            }
+
+            case 2:
+            {
+                char mar;
+                cin >> mar;
+                h.setMarime(mar);
+                break;
+            }
+
+            case 3:
+            {
+                string tipAn;
+                cin >> tipAn;
+                h.setTipAnimal(tipAn);
+                break;
+            }
+
+            case 4:
+            {
+                double pr;
+                cin >> pr;
+                h.setPret(pr);
+                break;
+            }
+
+            case 5:
+            {
+                string cul;
+                cin >> cul;
+                h.setCuloare(cul);
+                break;
+            }
+
+            default:
+                cout << "Nu corespunde niciunui atribut! \n";
+                break;
+            }
+            break;
+
+
+        default:
+            cout << "Optiunea nu exista! " << endl;
+            break;
+        }
+    }
+
+
+
+
+
+
+
+
+    /*
+    Client c1("balasa", "bianca", new int(20), 4.55, 1), 
+    Client c2("Cioinica", "Petru", new int(22), 4, 4);
     Client c3;
     c3 = c1 + c2;
     cout << c3;
+    */
 
     /*
     Hrana hr1("BrtCare", 34.5);
@@ -1026,34 +1359,57 @@ int main()
     cout << h3;
     */
 
-   /*
+    /*
     Animal a1("piscot", 'M', true, 1, false, 22.5, 233.3);
     Animal a2("piscot", 'M', true, 1, false, 22.4, 233.3);
+   
     if (a1 == a2)
         cout << "DA";
     else
         cout << "NU";
+
+    //cout<<a1.getNumarAnimale();
+    */
+
+   
+    /*
+    Client c1;
+    cin >> c1;
+    Client c2 = c1;
+    cout << c2;
+    */
+
+    /*
+    Hrana hr5("BritCare",25.9, "pisica",true,155 );
+    Animal a
+    */
+    
+    /*
+    Hainuta h10("onesie","caine",20);
+    Animal a10("Rex", 7, 10);
+    cout << " Recomandam marimea " << h10.aflaMarimeRecomandata(a10) << endl;
     */
 
 
-    //Client c1;
-    //cin >> c1;
-    //Client c2 = c1;
-    //cout << c2;
-    
-    
-    //Client c3("bibi", "balasa", 20);
-    
-    //Hainuta h1("Onesie", 'M',"caine",20);
-    //cout << " Recomandam marimea " << h1.aflaMarimeRecomandata(a1) << endl;
+    /*
+    Animal a7("Sophie",5,6);
+    a7.setAreProblemeSpeciale(false);
+    a7.verificaObezitate();
+    cout << "Are probleme speciale: " << a7.getAreProblemeSpeciale();
+    cout << endl;
+    */
 
-    //a1.setAreProblemeSpeciale(false);
-    //a1.verificaObezitate();
-    //cout << "Are probleme speciale: " << a1.getAreProblemeSpeciale();
-    //cout << endl;
-    //cout<<"Poate adopta: "<< c1.poateAdoptaAnimal(a1);
-    //cout << endl;
-    /*cin >> a1;
+    
+    /*
+    Client c5("Balasa", "Bianca", new int(20), 3.55, 1);
+    cout<<"Poate adopta: "<< c5.poateAdoptaAnimal(a1);
+    cout << endl;
+    */
+    
+
+    /*
+    Animal a1;
+    cin>>a1;
     cout << a1 << endl; 
     Client c1;
     cin >> c1;
@@ -1063,7 +1419,8 @@ int main()
     cout << h1 << endl;
     Hainuta ha1;
     cin >> ha1;
-    cout << ha1 << endl;*/
+    cout << ha1 << endl;
+    */
     
     return 0;
 }
