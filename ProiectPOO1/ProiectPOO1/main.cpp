@@ -69,7 +69,7 @@ public:
     ~Animal();
 
     //function
-    void verificaObezitate();
+    bool verificaObezitate();
 
 
 };
@@ -226,8 +226,9 @@ Animal::~Animal()
 
 //function :  verifica daca animalul este overweight in functie de varsta si greutate si daca este adevarat
            // se modifice arePrblemeSpeciale din False in True (daca e cazul) 
-void Animal::verificaObezitate()
+bool Animal::verificaObezitate()
 {
+    bool obezitate = false;
     int criteriuObezitate;
     if (this->varsta < 2)
         criteriuObezitate = 7;
@@ -240,7 +241,12 @@ void Animal::verificaObezitate()
     }
 
     if (this->greutate >= criteriuObezitate)
+    {
         this->areProblemeSpeciale = true;
+        obezitate = true;
+    }
+
+    return obezitate;       
 }
 class Client 
               
@@ -1009,10 +1015,10 @@ int main()
     {   
         cout << "\nALEGETI OPTIUNEA: " << endl;
         cout << "  0. Exit!\n";
-        cout << "  1. Creaza animal\n";
-        cout << "  2. Creaza client\n";
-        cout << "  3. Creaza hrana\n";
-        cout << "  4. Creaza hainuta\n";
+        cout << "  1. Creeaza animal\n";
+        cout << "  2. Creeaza client\n";
+        cout << "  3. Creeaza hrana\n";
+        cout << "  4. Creeaza hainuta\n";
         cout << "  5. Afiseaza animal\n";
         cout << "  6. Afiseaza client\n";
         cout << "  7. Afiseaza hrana\n";
@@ -1021,8 +1027,11 @@ int main()
         cout << " 10. Editeaza client\n";
         cout << " 11. Editeaza hrana\n";
         cout << " 12. Editeaza hainuta\n";
-        cout << "Introduceti optiunea dorita: \n";
-            
+        cout << " 13. Verifica daca animalul creat are probleme cu obezitatea\n";
+        cout << " 14. Verifica daca clientul poate adopta animalul creat\n";
+        cout << " 15. Calculeaza cantitatea de hrana recomandata animalului creat\n";
+        cout << " 16. Calculeaza marimea recomandata pentru hainuta animalului creat\n";
+        cout << " Introduceti optiunea dorita: \n";
         
         cin >> input;
 
@@ -1312,7 +1321,46 @@ int main()
             }
             break;
 
+        case 13:
+        {
+            bool copieAreProblemeSpeciale = a.getAreProblemeSpeciale();
+            
+            if (copieAreProblemeSpeciale == false && a.verificaObezitate() == false)
+                cout << " Animalul nu are nicio problema speciala\n";
+            else
+                if (copieAreProblemeSpeciale == true && a.verificaObezitate() == false)
+                    cout << " Animalul nu are probleme cu obezitatea, dar are alte probleme speciale\n";
+                else
+                    cout << " Animalul are probleme cu obezitatea\n";
+            break;       
+        }
 
+        case 14:
+        
+            if (c.poateAdoptaAnimal(a) == true)
+                cout << " Clientul poate adopta animalul\n";
+            else
+                cout << " Clientul nu poate adopta acest animal\n";
+            break;
+        
+
+        case 15:
+        
+            if (hr.getEsteUmeda() == true)
+                cout << " Animalului" << " " << a.getNume() << " " << "i se recomada" << " " 
+                     << hr.calculeazaGrameHrana(a) << " " << "grame de hrana umeda.\n";
+            else
+                cout << " Animalului" << " " << a.getNume() << " " << "i se recomada" << " "
+                << hr.calculeazaGrameHrana(a) << " " << "grame de hrana uscata.\n";
+            break;
+        
+
+        case 16:
+        
+            cout << "Marimea hainutei" << " " << h.getDenumire() << " " 
+                 << "ce se recomanda pentru animalul creat este" << " " << h.aflaMarimeRecomandata(a)<<endl;
+            break;
+        
         default:
             cout << "Optiunea nu exista! " << endl;
             break;
@@ -1394,8 +1442,7 @@ int main()
     /*
     Animal a7("Sophie",5,6);
     a7.setAreProblemeSpeciale(false);
-    a7.verificaObezitate();
-    cout << "Are probleme speciale: " << a7.getAreProblemeSpeciale();
+    cout << "Are probleme speciale: " << a7.verificaObezitate();
     cout << endl;
     */
 
